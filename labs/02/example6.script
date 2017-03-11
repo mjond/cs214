@@ -1,0 +1,97 @@
+Script started on Fri 12 Feb 2016 09:43:41 AM EST
+mjd85@atanasoff:~/Documents/214/labs/02$ cat example6.lex
+%{
+#include <stdio.h>
+#include "example6.tab.h"
+%}
+%%
+[0-9]+                  yylval = atoi(yytext); return NUMBER;
+heat                    return TOKHEAT;
+on|off                  yylval = !strcmp(yytext,"on"); return STATE;
+set                     return TOKSET;
+humidity		return TOKHUMIDITY;
+to			return TOKTO;
+temperature             return TOKTEMPERATURE;
+\n                      /* ignore end of line */;
+[ \t]+                  /* ignore whitespace */;
+%%
+mjd85@atanasoff:~/Documents/214/labs/02$ cat example6.y
+%{
+#include <stdio.h>
+#include <string.h>
+ 
+void yyerror(const char *str) {
+        fprintf(stderr,"error: %s\n",str);
+}
+ 
+int yywrap() {
+        return 1;
+} 
+  
+main() {
+        yyparse();
+} 
+
+%}
+
+%token NUMBER TOKHEAT STATE TOKSET TOKTEMPERATURE TOKTO TOKHUMIDITY
+%%
+
+commands: /* empty */
+        | commands command
+        ;
+
+command:
+        heat_switch
+        | temperature_set
+	| humidity_set
+        ;
+
+heat_switch:
+        TOKHEAT STATE
+        {
+                if ($2) {  /* if STATE == 1 */
+                        printf("\tHeat turned on\n");
+                } else {
+                        printf("\tHeat turned off\n");
+                }
+        }
+        ;
+
+temperature_set: 
+        TOKSET TOKTEMPERATURE NUMBER
+        {
+                printf("\tTemperature set to %d\n",$3);
+        }
+        ;
+
+humidity_set:
+	TOKSET TOKHUMIDITY TOKTO NUMBER
+	{
+		printf("\tHumidity set to %d\n", $4);
+	}
+	;
+mjd85@atanasoff:~/Documents/214/labs/02$ g flex b example6.lex
+mjd85@atanasoff:~/Documents/214/labs/02$ flex bison -d example.y
+flex: can't open bison
+mjd85@atanasoff:~/Documents/214/labs/02$ bson   ison -d example6.y
+mjd85@atanasoff:~/Documents/214/labs/02$ gcc lex.yy.c example6.tab.c -o example6
+mjd85@atanasoff:~/Documents/214/labs/02$ ./example6
+heat on
+	Heat turned on
+heat off
+	Heat turned off
+set temperature 22
+	Temperature set to 22
+set temperature 44
+	Temperature set to 44
+set humidity to 12
+	Humidity set to 12
+set humidity to 23
+	Humidity set to 23
+all done
+error: syntax error
+alldmjd85@atanasoff:~/Documents/214/labs/02$ ^C
+mjd85@atanasoff:~/Documents/214/labs/02$ exit
+
+Script done on Fri 12 Feb 2016 09:45:32 AM EST

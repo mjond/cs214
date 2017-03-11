@@ -1,0 +1,21 @@
+/* array.java prompts for values and stores them in an array
+ * By: Mark Davis
+ * Date: March 29, 2016
+ * Precondition: the values are numbers
+ * Output: the array's values
+ ***************************************************************/
+
+public class Array {
+	//main function
+	public static void main(String[] args) {
+ 		Scanner keyboard = new Scanner(System.in); //scan keyboard for input
+		System.out.println("Enter the size of the array: " ); //prompt for user input
+		double size = keyboard.nextDouble(); //store input as array size
+		theArray = new double[size];
+		readArray(theArray[], size);
+		}
+	
+	void readArray(double theArray, double size) {
+		
+	}
+}

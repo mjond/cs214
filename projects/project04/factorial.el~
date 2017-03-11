@@ -1,0 +1,26 @@
+; factorial.el computes factorials
+
+;input: a number
+;precondition: number is positive
+;output: factorial of number
+
+;created by: Mark Davis CS 214, Calvin College
+;date: March 1, 2015
+;Model Code: Project 1, CS 214
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;function factorial computes factorial
+;parameters: number
+;precondition: number>0
+;returns: factorial of number
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun factorial(number)
+  
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;main function
+;input: number
+;output: factorial of number
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

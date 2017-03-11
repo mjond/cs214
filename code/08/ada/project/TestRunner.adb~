@@ -1,0 +1,21 @@
+-- TestRunner.adb "test-drives" the Temperature type.
+--
+-- By: Mark Davis
+-- Date: April 14, 2016
+----------------------------------------------
+
+with Ada.Text_IO; use Ada.Text_IO;
+with Temp_Package; use Temp_Package;
+
+procedure TestRunner is
+
+baseTemp : Temp_Package.Temperature;
+limitTemp : Temp_Package.Temperature;
+stepValue : float;
+
+begin
+	Init(baseTemp, 100.0, "f");
+	Init(limitTemp, 10.0, "f"); 
+   
+
+end namer;

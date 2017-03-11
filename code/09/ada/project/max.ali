@@ -1,0 +1,68 @@
+V "GNAT Lib v4.6"
+M P W=b
+P SS ZX
+R nnnnnnnnnnnnnnnnnnnnnnnnnvnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnvnnnnnnnnnnnnnnnnnnnnn
+
+U max%b			max.adb			68f5d091 NE OO SU
+W ada%s			ada.ads			ada.ali
+W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W list_package%s	list_package.adb	list_package.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20090727140100 0c711ac9
+D a-finali.ads		20090409150019 e5e85fa4
+D a-filico.ads		20090409150019 872dc219
+D a-inteio.ads		20070406091342 f64b89a4
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-stream.ads		20090409150019 2ca4ee37
+D a-tags.ads		20101021101406 c7695348
+D a-textio.ads		20091028140912 386df5d4
+D a-tiinio.ads		20090409150019 aa04e5d6
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20090409150019 f77d8799
+D i-cstrea.ads		20100622165701 1bd72c32
+D list_package.ads	20160419235301 832b6da1
+D max.adb		20160419234344 25f8c140
+D system.ads		20140416172229 23e1f70b
+D s-crtl.ads		20100617122610 ac77b159
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20100909103250 443b9d66
+D s-finimp.ads		20090409150019 46853fe8
+D s-finroo.ads		20090409150019 dbb860c9
+D s-parame.ads		20091130110856 9c5d83fa
+D s-secsta.ads		20090707124243 eea35a36
+D s-soflin.ads		20090729085153 9414c974
+D s-stache.ads		20090417130712 596fc1b4
+D s-stalib.ads		20101021102512 c4241c00
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stratt.ads		20100909123135 aedef97e
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-wchcon.ads		20090417130712 bfeb2e3d
+X 1 ada.ads
+16K9*Ada 19e8 15|8r6 8r19 9r5 9r18
+X 5 a-inteio.ads
+18K13*Integer_Text_IO[10|45] 15|8w23 9r22
+X 9 a-textio.ads
+49K13*Text_IO 472e16 15|8w10 9r9
+167U14*New_Line 15|45s15 46s15 47s15 48s15 50s69 51s69 52s69 53s69
+243U14*Put 15|50s3 51s3 52s3 53s3
+X 10 a-tiinio.ads
+65U14*Put 15|50s45[5|18] 51s45[5|18] 52s45[5|18] 53s45[5|18]
+X 14 list_package.ads
+8K9*List_Package 88e17 15|8w40 9r39
+11R8*List 80e19 15|13r32
+20U13*Init 15|16s3 17s3 18s3 19s3
+43U13*Append 15|21s3 22s3 23s3 24s3 25s3 27s3 28s3 29s3 30s3 31s3 33s3 34s3
+. 35s3 36s3 37s3 39s3 40s3 41s3 42s3 43s3
+52U13*Put 15|45s3 46s3 47s3 48s3
+69V12*find{integer} 15|50s50 51s50 52s50 53s50
+X 15 max.adb
+11U11*Max 11b11 55l5 55t8
+13r3 List1{14|11R8} 16m8 21m14 22m14 23m14 24m14 25m14 45r7 50r55
+13r10 List2{14|11R8} 17m8 27m14 28m14 29m14 30m14 31m14 46r7 51r55
+13r17 List3{14|11R8} 18m8 33m14 34m14 35m14 36m14 37m14 47r7 52r55
+13r24 List4{14|11R8} 19m8 39m14 40m14 41m14 42m14 43m14 48r7 53r55
+

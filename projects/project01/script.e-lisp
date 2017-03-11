@@ -1,0 +1,51 @@
+;; This buffer is for notes you don't want to save, and for Lisp evaluation.
+;; If you want to create a file, visit that file with C-x C-f,
+;; then enter the text in that file's own buffer.
+
+; rectangle_area.el computes area of rectangle
+;
+;input: length of rectangle, width of rectangle
+;precondition: length and width are positive
+;output: are of rectangle
+
+;Created by: Mark Davis, CS 214, Calvin College
+;Date: February 10, 2016
+;Model Code: CS 214, Lab01
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;function rectangleArea computes a rectangle's area
+;parameters, length and width, both numbers
+;precondition: length>0, width>0
+;returns: area of rectangle
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun rectangleArea(width length) ; function that computes area
+  "Compute the area of a rectangle, passed its width and length." 
+  ( * width length)) ; length multiplied by width
+rectangleArea ; testing function
+
+(defun rectangle_area(w l)
+  "Compute the area of a rectanlge, given its width & length interactively."
+  (interactive "nWidth: ") ;prompt for width value and store in variable
+  (interactive "nLength: ") ;prompt for length value and store in variable
+  (setq area (rectangleArea w l)) ; call rectangleArea to compute
+  (message "The rectangle's area is %f." area)) ;output area message
+rectangle_area
+
+(rectangleArea 2 2)
+4
+(rectangleArea 3 3)
+9
+(rectangleArea 5 2)
+10
+(rectangleArea 4 4)
+16
+
+
+
+
+
+
+
+

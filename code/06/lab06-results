@@ -1,0 +1,249 @@
+Script started on Wed 23 Mar 2016 09:48:20 AM EDT
+mjd85@stroustrup:~/Documents/214/code/06$ cat Average.java
+/* Average.java is a driver for method avg().
+ * Started By: Dr. Nelesen
+ * Completed By: Mark Davis
+ * Date: March 23, 2016
+ * Precondition: theArray, is an array of double values.
+ * Output: the average of the numbers in theArray.
+ ***************************************************************/
+
+public class Average
+{
+  public static void main(String[] args)
+    {
+      double[] theArray = {6.0, 7.0, 8.0, 9.0};
+ 
+      // output the average of the values in theArray
+      System.out.println("The average is " + avg(theArray));
+    }
+  
+
+  /* sum() is a method that computes the sum of all the values
+   * in an array of doubles.
+   * Receive: anArray, an array of doubles.
+   * Return: the sum of the values in anArray.
+   ************************************************************/
+   public static double sum(double[] theArray) {
+	double total = 0;
+	for (int i = 0; i < theArray.length; i++) {
+		total += theArray[i];		
+		}
+	return total;
+  	}
+
+  /* avg() is a method that computes the average of the values
+   * in an array.
+   * Receive: anArray, an array of doubles.
+   * Return: the average of the values in anArray.
+   ************************************************************/
+   public static double avg(double[] anArray) {
+	if (anArray.length <= 0) {
+		return 0.0; }
+	else {
+		return sum(anArray) / anArray.length;
+	}
+   }
+  
+}
+mjd85@stroustrup:~/Documents/214/code/06$ javac Average.java
+mjd85@stroustrup:~/Documents/214/code/06$ java Average
+The average is 7.5
+mjd85@stroustrup:~/Documents/214/code/06$ exit
+exit
+
+Script done on Wed 23 Mar 2016 09:48:36 AM EDT
+Script started on Thu 24 Mar 2016 10:03:49 AM EDT
+mjd85@atanasoff:~/Documents/214/code/06$ cat average.adb
+-- average.adb "test-drives" function Average.
+-- Precondition: theArray is an array of numbers.
+-- Output: the average of the numbers.
+--
+-- Begun by: Dr. Adams, CS 214 at Calvin College.
+-- Completed by: Mark Davis
+-- Date: March 23, 2016
+-----------------------------------------------
+
+with Ada.Text_IO; use Ada.Text_IO;             -- Put(String)
+with Ada.Float_Text_IO; use Ada.Float_Text_IO; -- Put(Float)
+
+procedure average is
+
+type Vector is array ( Positive range <> ) of float;
+
+array0: Vector := (0.0, 0.0);
+
+array1: Vector := (6.0, 7.0, 8.0, 9.0);
+
+----------------------------------------------
+-- sum() sums the values in an array           -
+-- Receive: anArray, an array of numbers     -
+-- Return: the sum of the values in anArray. -
+----------------------------------------------
+function sum(A: Vector) return Float is
+	total : float := 0.0;
+begin
+	for i in A'Range
+	loop
+		total := total + A(i);
+	end loop;
+	return total;
+end sum;
+
+----------------------------------------------
+-- average() finds average of the values in an array      
+-- Receive: anArray, an array of numbers     
+-- Return: the average of the values in anArray.
+----------------------------------------------
+function average(A: Vector) return Float is
+begin
+	if Float(A'Length) <= 0.0 then
+		return 0.0;
+	else
+		return sum(A) / Float(A'Length);
+	end if;
+end average;
+
+begin
+   Put(" average 0 is ");
+   Put( average(array0) );
+   New_line;
+   Put(" average 1 is ");
+   Put( average(array1) );
+   New_line;
+end average;
+
+mjd85@atanasoff:~/Documents/214/code/06$ gnatmake average.adb
+gnatmake: "average" up to date.
+mjd85@atanasoff:~/Documents/214/code/06$ ./average
+ average 0 is  0.00000E+00
+ average 1 is  7.50000E+00
+mjd85@atanasoff:~/Documents/214/code/06$ exit
+exit
+
+Script done on Thu 24 Mar 2016 10:04:16 AM EDT
+Script started on Thu 24 Mar 2016 10:06:32 AM EDT
+mjd85@atanasoff:~/Documents/214/code/06$ cat average.rb
+# average.rb averages the values of an array of doubles.
+# Precondition: theArray is an array of numbers
+# Output: the average of the values in theArray
+#
+# Begun by: Dr. Adams, for CS 214 at Calvin College.
+# Completed by:: Mark Davis
+# Date: March 23, 2016
+########################################################
+
+###############################################
+# sum() sums the values in an array
+# Receive: anArray, an array of numbers
+# Return: the sum of the values in anArray.
+################################################
+def sum(array)
+	if array.size <= 0.0
+		return 0.0
+	else
+		total = 0
+		array.each{ |element| total=total+element }
+		return total
+	end
+end
+
+
+###############################################
+# average() computes average of elements in an array
+# Receive: anArray, an array of numbers
+# Return: the average of the values in anArray.
+################################################
+def average(array)
+	if array.size <= 0.0
+		return 0.0
+	else
+		return sum(array) / array.length
+	end
+end
+
+def main
+   array0 = []
+   array1 = [6.0, 7.0, 8.0, 9.0]
+
+   puts "sum 0 is: #{ sum(array0) }\n"
+   puts "sum 1 is: #{ sum(array1) }\n"
+
+   puts "average 0 is: #{ average(array0) }\n"
+   puts "average 1 is: #{ average(array1) }\n"
+end
+
+main
+
+mjd85@atanasoff:~/Documents/214/code/06$ ruby average.rub  b
+sum 0 is: 0.0
+sum 1 is: 30.0
+average 0 is: 0.0
+average 1 is: 7.5
+mjd85@atanasoff:~/Documents/214/code/06$ exit
+exit
+
+Script done on Thu 24 Mar 2016 10:06:46 AM EDT
+Script started on Thu 24 Mar 2016 10:04:23 AM EDT
+mjd85@atanasoff:~/Documents/214/code/06$ cat average.el
+;;; average.el "test-drives" function average().
+;;; Output: the average of a sequence of numbers.
+;;;
+;;; Begun by: Dr. Adams, CS 214 at Calvin College.
+;;; Completed by: Mark Davis
+;;; Date: March 24, 2016
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; sum() sums the values in an array.         ;;
+;;; Receive: anArray, an array of numbers,   ;;
+;;;          itsSize, its size.              ;;
+;;; Return: the sum of the values in anArray.;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun sum (anArray itsSize)
+  (if (vectorp anArray)
+      (if (<= itsSize 0)
+	  0.0
+	(+ (aref anArray (- itsSize 1)) (sum anArray (- itsSize 1))))
+    nil))
+
+sum
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; average() computes the average of an array of numbers.;;
+;;; Receive: anArray, an array of numbers.              ;;
+;;; Return: the average of the numbers.                 ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun average (anArray)
+  (if (vectorp anArray)
+      (if (<= (length anArray) 0)
+	 0.0
+        (/ (sum anArray (length anArray)) (length anArray))))) 
+
+average
+
+
+;;; Test function sum
+(sum [] 0)
+0.0
+
+(sum [9.0 8.0 7.0 6.0] 4)
+30.0
+
+
+;;; Test function average
+(average [])
+0.0
+
+
+(average [9.0 8.0 7.0 6.0])
+7.5
+
+
+
+mjd85@atanasoff:~/Documents/214/code/06$ exit
+exit
+
+Script done on Thu 24 Mar 2016 10:04:31 AM EDT

@@ -1,0 +1,72 @@
+V "GNAT Lib v4.8"
+M P W=b
+P ZX
+
+RN
+RV NO_FLOATING_POINT
+RV NO_IO
+RV SPARK
+
+U testrunner%b		testrunner.adb		1332ff98 NE OO SU
+W ada%s			ada.ads			ada.ali
+W ada.float_text_io%s	a-flteio.ads		a-flteio.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W temp_package%s	temp_package.adb	temp_package.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20120716125141 10fcae55
+D a-finali.ads		20111121113555 52ecdc1b
+D a-flteio.ads		20070406091342 e18a47a0
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-stream.ads		20090409150019 2ca4ee37
+D a-tags.ads		20111212115430 6c0509d0
+D a-textio.ads		20130104124955 386df5d4
+D a-tiflio.ads		20090409150019 56fbda09
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20110906094621 129923ea
+D i-cstrea.ads		20130102105938 3286f6aa
+D system.ads		20140416144310 90249111
+D s-crtl.ads		20130102105938 1ea48bce
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20111024091915 b95bb341
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20110830140625 b6e20cc0
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20120515094619 24c8153c
+D s-stache.ads		20090417130712 596fc1b4
+D s-stalib.ads		20130104124955 f78bcf95
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stopoo.ads		20111013103733 7b8fbeee
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-wchcon.ads		20090417130712 bfeb2e3d
+D temp_package.ads	20160415005253 20666dee
+D testrunner.adb	20160415005755 eab32002
+X 1 ada.ads
+16K9*Ada 19e8 31|7r6 7r23 9r6 9r29
+X 4 a-flteio.ads
+20K13*Float_Text_IO[9|45] 31|9w10 9r33
+X 8 a-textio.ads
+49K13*Text_IO 471e16 31|7w10 7r27
+166U14*New_Line 31|41s10
+242U14*Put 31|20s9 23s9 26s9 32s10 35s10 38s10
+X 9 a-tiflio.ads
+56U14*Get 31|27s9[4|20]
+X 30 temp_package.ads
+8K9*Temp_Package 32e17 31|8w6 8r24 14r12 15r13
+10R6*Temperature 30e19 31|14r25 15r26
+16U11*setCelsius 31|33s10
+17U11*setKelvin 31|36s10
+18U11*setFahrenheit 31|39s10
+19U11*raiseTemp 31|40s10
+22V10*lessThan{boolean} 31|29s15
+23U11*printTemp 31|31s10 34s10 37s10
+24U11*readTemp 31|21s9 24s9
+X 31 testrunner.adb
+12U11*TestRunner 12b11 44l5 44t15
+14r1 baseTemp{30|10R6} 21m18 29r24 31r20 33m21 34r20 36m20 37r20 39m24 40m20
+15r1 limitTemp{30|10R6} 24m18 29r34
+16f1 stepValue{float} 27m13 40r30
+

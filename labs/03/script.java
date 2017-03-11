@@ -1,0 +1,61 @@
+Script started on Thu 18 Feb 2016 09:14:10 AM EST
+mjd85@aiken:~/Documents/214/labs/03$ cat year_codes.java
+/* year_codes.java is a driver for function yearCode().
+ * Begun by: Serita Nelesen, for CS 214 at Calvin College.
+ ****************************************************************/
+import java.util.Scanner;
+
+public class year_codes{
+
+   public static void main(String[] args) {
+      Scanner keyboard = new Scanner(System.in); //get input
+      System.out.println("\nEnter your academic year: "); // prompt
+
+      String year = keyboard.next();       // read year
+      System.out.println(yearCode(year)); // display its code
+   }
+
+   /***************************************************************
+    * yearCode() converts an academic year into its integer code. *
+    * Receive: year, a string.
+    * PRE: year is one of {freshman, sophomore, junior, or senior}.
+    * Return: the integer code corresponding to year.
+    */
+
+   public static int yearCode(String year) {
+	if (year.equals("freshman"))/*if input is freshman*/
+		return 1;	
+	else if (year.equals("sophomore")) /*if input is sophomore*/
+		return 2;	
+	else if (year.equals("junior")) /*if input is junior*/
+		return 3; /*return 3*/	
+	else if (year.equals("senior")) /*if input is senior*/
+		return 4; /*return 4*/	
+	else
+		return 0;
+	}
+}
+mjd85@aiken:~/Documents/214/labs/03$ javac year_codes.java
+mjd85@aiken:~/Documents/214/labs/03$ java year_codes
+
+Enter your academic year: 
+fres    sophomore
+2
+mjd85@aiken:~/Documents/214/labs/03$ java year_codes
+
+Enter your academic year: 
+senior
+4
+mjd85@aiken:~/Documents/214/labs/03$ java year_codes
+
+Enter your academic year: 
+professor
+0
+mjd85@aiken:~/Documents/214/labs/03$ java year_codes
+
+Enter your academic year: 
+FRESHMAN
+0
+mjd85@aiken:~/Documents/214/labs/03$ exit
+
+Script done on Thu 18 Feb 2016 09:15:07 AM EST

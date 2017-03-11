@@ -1,0 +1,228 @@
+Script started on Thu 18 Feb 2016 09:14:10 AM EST
+mjd85@aiken:~/Documents/214/labs/03$ cat year_codes.java
+/* year_codes.java is a driver for function yearCode().
+ * Begun by: Serita Nelesen, for CS 214 at Calvin College.
+ ****************************************************************/
+import java.util.Scanner;
+
+public class year_codes{
+
+   public static void main(String[] args) {
+      Scanner keyboard = new Scanner(System.in); //get input
+      System.out.println("\nEnter your academic year: "); // prompt
+
+      String year = keyboard.next();       // read year
+      System.out.println(yearCode(year)); // display its code
+   }
+
+   /***************************************************************
+    * yearCode() converts an academic year into its integer code. *
+    * Receive: year, a string.
+    * PRE: year is one of {freshman, sophomore, junior, or senior}.
+    * Return: the integer code corresponding to year.
+    */
+
+   public static int yearCode(String year) {
+	if (year.equals("freshman"))/*if input is freshman*/
+		return 1;	
+	else if (year.equals("sophomore")) /*if input is sophomore*/
+		return 2;	
+	else if (year.equals("junior")) /*if input is junior*/
+		return 3; /*return 3*/	
+	else if (year.equals("senior")) /*if input is senior*/
+		return 4; /*return 4*/	
+	else
+		return 0;
+	}
+}
+mjd85@aiken:~/Documents/214/labs/03$ javac year_codes.java
+mjd85@aiken:~/Documents/214/labs/03$ java year_codes
+
+Enter your academic year: 
+fres    sophomore
+2
+mjd85@aiken:~/Documents/214/labs/03$ java year_codes
+
+Enter your academic year: 
+senior
+4
+mjd85@aiken:~/Documents/214/labs/03$ java year_codes
+
+Enter your academic year: 
+professor
+0
+mjd85@aiken:~/Documents/214/labs/03$ java year_codes
+
+Enter your academic year: 
+FRESHMAN
+0
+mjd85@aiken:~/Documents/214/labs/03$ exit
+
+Script done on Thu 18 Feb 2016 09:15:07 AM EST
+Script started on Thu 18 Feb 2016 09:36:32 AM EST
+mjd85@aiken:~/Documents/214/labs/03$ cat year_codes.adb
+-- year_codes.adb converts academic year codes to corresponding years.
+--
+-- Begun by: Dr. Adams, for CS 214 at Calvin College.
+--
+-- Input: year, a string
+-- Precondition: year is one of "freshman", "sophomore", "junior", "senior"
+-- Output: The year code (1, 2, 3 or 4) corresponding to year.
+----------------------------------------------------
+
+with Ada.Text_IO, Ada.Integer_Text_IO;
+use  Ada.Text_IO, Ada.Integer_Text_IO;
+
+procedure year_codes is
+
+   year : String(1..9) := "         ";--valid input is 9 characters long
+   charsRead : Natural;
+
+function yearCode(year : string) return Integer is
+begin
+   if (year = "freshman ") then --if input is freshman
+	return 1; --return 1
+   elsif (year = "sophomore") then --if input is sophomore
+	return 2; -- return 2
+   elsif (year = "junior   ") then -- if input is junior
+	return 3;--return 3
+   elsif (year = "senior   ") then -- if input is senior
+	return 4; --return 4
+   else 
+	return 0; --else return 0
+   end if;--end if statement
+end yearCode;--end function
+
+begin                                          
+   Put("Enter your academic year: ");           -- Prompt for input
+   Get_Line(year, charsRead);                   -- Input
+   Put( yearCode(year) );                       -- Convert and output
+   New_Line;
+end year_codes;
+
+mjd85@aiken:~/Documents/214/labs/03$ sc  gnatmake year_codes.adb
+gnatmake: "year_codes" up to date.
+mjd85@aiken:~/Documents/214/labs/03$ ./year_codes
+Enter your academic year: f sophomore
+          2
+mjd85@aiken:~/Documents/214/labs/03$ ./year_codes
+Enter your academic year: senior
+          4
+mjd85@aiken:~/Documents/214/labs/03$ ./year_codes
+Enter your academic year: junior
+          3
+mjd85@aiken:~/Documents/214/labs/03$ ./year_codes
+Enter your academic year: freshman
+          1
+mjd85@aiken:~/Documents/214/labs/03$ ./year_codes
+Enter your academic year: prof
+          0
+mjd85@aiken:~/Documents/214/labs/03$ exit
+
+Script done on Thu 18 Feb 2016 09:37:33 AM EST
+;; This buffer is for notes you don't want to save, and for Lisp evaluation.
+;; If you want to create a file, visit that file with C-x C-f,
+;; then enter the text in that file's own buffer.
+
+;;; year_codes.el is a driver for function yearCode.
+;;; Begun by: Dr. Adams, for CS 214 at Calvin College.
+;;; completed by: MArk Davis
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; yearCode returns the code for a given academic year.                 ;;;
+;;; Receive: year, a string.                                             ;;;
+;;; Precondition: year is one of {freshman, sophomore, junior or senior}.;;;
+;;; Return: the integer code corresponding to year.                      ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; Replace this line with the definition of function yearCode().
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; main function                        ;;;
+;;; input: year                          ;;;
+;;; output: code corresponding to year   ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun yearCode(year) ;declare function
+  (if (equal year "freshman");if year if freshman
+      1 ;return 1
+  (if (equal year "sophomore") ; if year is sophomore
+      2 ;return 2
+  (if (equal year "junior"); if year is junior
+      3 ;return 3
+  (if (equal year "senior"); if year senior
+      4 ;return 4
+0))))) ;else return 0
+yearCode
+
+
+(defun main (year);declare main function
+ (interactive "sEnter your academic year: ")  ; read year
+ (message "%d" (yearCode year)))  ; display its code
+main
+    
+;;; Tests...
+(main "junior")
+"3"
+
+(yearCode "junior")
+3
+
+(main "freshman")
+"1"
+
+(main "sophomore")
+"2"
+
+Script started on Thu 18 Feb 2016 09:56:09 AM EST
+mjd85@aiken:~/Documents/214/labs/03$ cat year_codes.rb
+#! /usr/bin/ruby
+# year_codes.rb translates an academic year into a numeric code
+# Begun by: Dr. Nelesen, for CS 214 at Calvin College 
+################################################################
+
+# Input:  The name of an academic year
+# Precondition: The academic year is a string with a value of freshman, 
+#   sophomore, junior or senior
+# Output: The corresponding integer code for the given academic year
+
+def yearCode(year)
+	if year =~ /freshman/ #if input is freshman
+		return 1
+	elsif year =~ /sophomore/ #if input is sophomore
+		return 2
+	elsif year =~ /junior/ #if input is junior
+		return 3
+	elsif year=~ /senior/ #if input is senior
+		return 4
+	else 
+		return 0 #return 0
+	end
+end
+
+if __FILE__ == $0
+   print "Enter the year: " #prompt user
+   year = gets #get year
+   print "Numeric code is: " #output message
+   puts yearCode(year) #year value
+end
+
+mjd85@aiken:~/Documents/214/labs/03$ ruby year_cd odes.rb
+Enter the year: freshman
+Numeric code is: 1
+mjd85@aiken:~/Documents/214/labs/03$ ye  ruby year_cdoes.     odes.rb
+Enter the year: soh phomore
+Numeric code is: 2
+mjd85@aiken:~/Documents/214/labs/03$ ruby year_codes.rb
+Enter the year: junior
+Numeric code is: 3
+mjd85@aiken:~/Documents/214/labs/03$ ruby year_cdoes    odes.rb
+Enter the year: senior
+Numeric code is: 4
+mjd85@aiken:~/Documents/214/labs/03$ ruby year_codes.rb
+Enter the year: prof
+Numeric code is: 0
+mjd85@aiken:~/Documents/214/labs/03$ ruby year_codes.rb
+Enter the year: a;lksdj
+Numeric code is: 0
+mjd85@aiken:~/Documents/214/labs/03$ exit
+
+Script done on Thu 18 Feb 2016 09:57:17 AM EST

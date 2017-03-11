@@ -1,0 +1,254 @@
+Script started on Tue 23 Feb 2016 09:24:15 AM EST
+mjd85@hopper:~/Documents/214/projects/project03$ cat gar  rade_switch.java
+/*grade_switch.java computes corresponding letter grade 
+
+Input: number grade/percentage
+Precondition: input is a positive number between 1-10
+Output: corresponding letter grade to percentage
+
+Created by: Mark Davis, CS 214, Calvin College
+Date: February 25, 2016
+Model Code: CS 214 lab03
+*********************************/
+
+import java.util.Scanner; //include class for Scanner
+
+public class grade_switch{
+	public static void main(String[] args) {
+		Scanner keyboard = new Scanner(System.in); //scan keyboard for input
+		System.out.println("\nEnter your average: "); //prompt for average
+		
+		int average = keyboard.nextInt(); //read average
+		System.out.println(letterGrade(average)); //display its code
+	}
+
+    /***************************************************************
+    * gradeCode() converts a number grade to letter grade. *
+    * Receive: grade, an integer.
+    * PRE: grade is integer (1-10).
+    * Return: the corresponding letter grade (string).
+    */
+	public static char letterGrade(int average) {
+		switch (average / 10) //get value for switching
+		{
+			case 10: case 9: //case 10 or 9
+			  return 'A'; //return A
+			case 8: //case 8
+			  return 'B';
+			case 7: //if value is of case 7
+			  return 'C';
+			case 6: //if value is case 6
+			  return 'D';
+			default: //anything lower than 60 is an F
+			  return 'F';
+		}
+	}
+}
+mjd85@hopper:~/Documents/214/projects/project03$ javac sc  gar  rade_switch.java
+mjd85@hopper:~/Documents/214/projects/project03$ java grade_switch
+
+Enter your average: 
+95
+A
+mjd85@hopper:~/Documents/214/projects/project03$ java grade_swtich    itch
+
+Enter your average: 
+85
+B
+mjd85@hopper:~/Documents/214/projects/project03$ java grade_switch
+
+Enter your average: 
+75
+C
+mjd85@hopper:~/Documents/214/projects/project03$ g java grade_switch
+
+Enter your average: 
+65
+D
+mjd85@hopper:~/Documents/214/projects/project03$ java grade_switch
+
+Enter your average: 
+55
+F
+mjd85@hopper:~/Documents/214/projects/project03$ java      exit
+exit
+
+Script done on Tue 23 Feb 2016 09:25:26 AM EST
+Script started on Thu 25 Feb 2016 04:03:20 PM EST
+mjd85@zuse:~/Documents/214/projects/project03$ cat grade_switch.adb
+--grade_switch.java computes corresponding letter grade 
+
+--Input: number grade/percentage
+--Precondition: input is a positive number between 1-10
+--Output: corresponding letter grade to percentage
+
+--Created by: Mark Davis, CS 214, Calvin College
+--Date: February 25, 2016
+--Model Code: CS 214 lab03
+------------------------------------------------------
+
+with Ada.Text_IO, Ada.Integer_Text_IO;
+use  Ada.Text_IO, Ada.Integer_Text_IO;
+
+procedure grade_switch is
+
+	grade : String(1..9) := "         "; --declare variable for average grade
+	charsRead : Natural; --declare read integer
+
+	function letterCode(grade: in string) return string is --function to for case statement
+	tim: Integer := Integer'Value(grade); --convert input to an integer
+	begin
+		--Case statement
+		tim := tim/10; //integer division for case statement
+		case tim is
+		when 10 | 9=> return "A"; --if grade is 9 or 10
+		when 8  => return "B"; --if 8, return "B"
+		when 7  => return "C";
+		when 6  => return "D";
+		when others => return "F";
+		end case; --end case statement
+	end letterCode; --end function
+
+begin --begin main program
+	Put("Enter your average: "); -- prompt for input
+	Get_Line(grade, charsRead); -- read input and store in grade variable
+	Put( letterCode(grade) ); -- compute corresponding letter grade
+	New_Line; --new line
+end grade_switch;
+mjd85@zuse:~/Documents/214/projects/project03$ gnatmake grdae   ade_switch
+gnatmake: "grade_switch" up to date.
+mjd85@zuse:~/Documents/214/projects/project03$ ./grade_switch
+Enter your average: 95
+A
+mjd85@zuse:~/Documents/214/projects/project03$ ./grade_switch
+Enter your average: 55
+F
+mjd85@zuse:~/Documents/214/projects/project03$ ./grade_switch
+Enter your average: 67
+D
+mjd85@zuse:~/Documents/214/projects/project03$ ./grade_switch
+Enter your average: 78
+C
+mjd85@zuse:~/Documents/214/projects/project03$ ./grade_switch
+Enter your average: 88
+B
+mjd85@zuse:~/Documents/214/projects/project03$ ./grade_switch
+Enter your average: 100
+A
+mjd85@zuse:~/Documents/214/projects/project03$ exit
+exit
+
+Script done on Thu 25 Feb 2016 04:04:08 PM EST
+;; This buffer is for notes you don't want to save, and for Lisp evaluation.
+;; If you want to create a file, visit that file with C-x C-f,
+;; then enter the text in that file's own buffer.
+
+;grade_switch is a driver function for grade_switch
+;created by Mark Davis
+;Date: February 25, 2016
+;CS 214, project03 CALVIN COLLEGE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;receive: grade, an integer
+;precondition: integer is positive
+;return: corresponding letter grade
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun letterCode(grade) ;declare function
+  (pcase (string-to-number(format "%d" (/ grade 10))) ; declare case switch and integer divide by 10
+  ((or 10 9) "A") ;if 10 or 9, output 'A'
+  (8 "B")
+  (7 "C")
+  (6 "D")
+  (code "F"))) ;everything else gets an 'F'
+letterCode
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;main function
+;input: a grade, integer
+;output: corresponding letter grade
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun main(grade) ;declare main function
+  (interactive "sEnter your average grade: ") ;read grade
+  (string-to-number grade) ;convert to number
+  (message  (letterCode (string-to-number grade))) ;display corresponding letter grad
+)
+main
+
+
+
+
+;;;;;tests;;;;;
+
+(main "99")
+"A"
+(main "85")
+"B"
+(main "75")
+"C"
+(main "65")
+"D"
+(main"55")
+"F"
+
+
+
+
+
+
+
+
+Script started on Tue 23 Feb 2016 08:22:45 PM EST
+mjd85@kay:~/Documents/214/projects/project03$ cat grade__w  swt itch.rb
+#! /usr/bin/ruby
+# grade_switch.rb translates an average into a letter grade
+#created by: Mark Davis CS 214 project03
+#model code: lab03, CS 214
+################################################################
+
+# Input:  average grade (integer)
+# Precondition: the grade is a positive integer (0-100)
+# Output: The corresponding letter grade for average
+
+
+if __FILE__ == $0
+	print "Enter your average grade: " #prompt for grade
+	grade = gets.chomp #store in variable
+	average = grade.to_i/10 #compute integer division
+	print "Your grade is: " #output message
+
+	case average #initiate case
+	when 10, 9 #if 10 or 9
+		puts 'A' #ouput 'A'
+	when 8 #if average is 8
+		puts 'B' #output 'B'
+	when 7
+		puts 'C'
+	when 6
+		puts 'D'
+	else #if not 10, 9 , 8, 7, or 6
+		puts 'F' #output 10
+	end #end case
+end #end program
+mjd85@kay:~/Documents/214/projects/project03$ ruby grade_switch.rb
+Enter your average grade: 95
+Your grade is: A
+mjd85@kay:~/Documents/214/projects/project03$ ruby grade_switch.rb
+Enter your average grade: 85
+Your grade is: B
+mjd85@kay:~/Documents/214/projects/project03$ g ruby grade_switch.rb
+Enter your average grade: 75
+Your grade is: C
+mjd85@kay:~/Documents/214/projects/project03$ ruby grda  ade_switch.rb
+Enter your average grade: 65
+Your grade is: D
+mjd85@kay:~/Documents/214/projects/project03$ ruby gr       ruby grade_switch.rb
+Enter your average grade: 55
+Your grade is: F
+mjd85@kay:~/Documents/214/projects/project03$ ruby grade_switch.rb
+Enter your average grade: 100
+Your grade is: A
+mjd85@kay:~/Documents/214/projects/project03$ exit
+exit
+
+Script done on Tue 23 Feb 2016 08:23:41 PM EST

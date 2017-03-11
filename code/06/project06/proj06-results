@@ -1,0 +1,312 @@
+Script started on Tue 29 Mar 2016 09:37:48 PM EDT
+mjd85@goldberg:~/Documents/214/code/06/project06$ cat Array.java
+/* array.java prompts for values and stores them in an array
+ * By: Mark Davis
+ * Date: March 29, 2016
+ * Precondition: the values are numbers
+ * Output: the array's values
+ ***************************************************************/
+import java.util.Scanner; //include class for Scanner
+
+public class Array {
+	public static void main(String[] args) {
+		Array ar = new Array(); //create instance of class
+		System.out.println("Enter the size of the array: " ); //prompt for user input
+		Scanner keyboard = new Scanner(System.in); //scan keyboard for input
+		int size = keyboard.nextInt(); //store input as array size
+		double[] theArray = new double[size]; //declare array
+		ar.readArray(theArray, size); //call read function
+		ar.printArray(theArray, size); //call print function
+		}
+	
+	/* readArray() prompts user for values and stores them in the array
+   	* Receive: anArray, size of the array
+   	* Precondition: inputs are doubles
+   	************************************************************/
+	void readArray(double theArray[], int size) {
+		Scanner keyboard = new Scanner(System.in); // scan keyboard for input
+		for (int i = 0; i < size; i++) { //loop to iterate through array
+			System.out.println("Enter the value for element " + (i+1)); //prompt for input
+			double value = keyboard.nextDouble(); // store input
+			theArray[i] = value; //store input in array
+		}
+	}
+
+	/* printArray() outputs all elements in array
+   	* Receive: anArray, size of the array
+   	* Precondition: parameters are doubles and ints
+   	************************************************************/
+	void printArray(double theArray[], int size) {
+		for (int i = 0; i < size; i++) { //loop to iterate through array
+			System.out.println("The values of the array are: " + theArray[i]); //output elements of array
+		}
+	}
+}
+mjd85@goldberg:~/Documents/214/code/06/project06$ javac java    Array.java
+mjd85@goldberg:~/Documents/214/code/06/project06$ jav   java Array
+Enter the size of the array: 
+4
+Enter the value for element 1
+1
+Enter the value for element 2
+2
+Enter the value for element 3
+3
+Enter the value for element 4
+4
+The values of the array are: 1.0
+The values of the array are: 2.0
+The values of the array are: 3.0
+The values of the array are: 4.0
+mjd85@goldberg:~/Documents/214/code/06/project06$ java Array
+Enter the size of the array: 
+3
+Enter the value for element 1
+8
+Enter the value for element 2
+8
+Enter the value for element 3
+8
+The values of the array are: 8.0
+The values of the array are: 8.0
+The values of the array are: 8.0
+mjd85@goldberg:~/Documents/214/code/06/project06$ exit
+exit
+
+Script done on Tue 29 Mar 2016 09:38:15 PM EDT
+Script started on Wed 30 Mar 2016 09:33:59 PM EDT
+mjd85@sutherland:~/Documents/214/code/06/project06$ cat program.db  adb
+-- Array.adb prompts for user input and outputs 
+-- contents of the array
+-- Precondition: theArray is an array of numbers.
+-- Output: the elements of an array
+--
+-- By: Mark Davis
+-- Date: March 30, 2016
+-----------------------------------------------
+with Ada.Text_IO; use Ada.Text_IO;             -- Put(String)
+with Ada.Float_Text_IO; use Ada.Float_Text_IO; -- Put(Float)
+with Ada.Integer_Text_IO; -- calling Float library
+use Ada.Integer_Text_IO;
+
+procedure program is
+
+type Vector is array ( Positive range <> ) of integer;
+
+size : integer; --variable for storing size of array
+
+value : integer; --variable for storing user input
+
+
+----------------------------------------------
+-- readArray() gets input from user for array-
+-- Receive: anArray, size of array           -
+-- Precondition: inputs are integers         -
+----------------------------------------------
+procedure readArray(Arr : out Vector; size : integer) is
+
+begin
+	for I in Arr'Range 
+	loop
+		Get(value);
+		Arr(I) := value;
+	end loop;
+end readArray;
+
+
+----------------------------------------------
+-- printArray() prints out elements in array 
+-- Receive: anArray, an array of numbers     
+----------------------------------------------
+procedure printArray(Arr: Vector) is
+begin
+	Put_Line("Elements are: ");
+	for i in Integer range Arr'First .. Arr'Last
+	loop
+		Put( Arr(i) );
+	end loop;
+end printArray;
+
+
+begin 
+Put("Enter the size of the array: ");
+Get(size);
+  declare
+	array1 : Vector(1 .. size);
+  begin
+	readArray(array1, size);
+	printArray(array1);
+  end;
+end program;
+mjd85@sutherland:~/Documents/214/code/06/project06$ ./program
+Enter the size of the array: 3
+2
+2
+2
+Elements are: 
+          2          2          2
+mjd85@sutherland:~/Documents/214/code/06/project06$ ./program
+Enter the size of the array: 5
+5
+4
+3
+2
+1
+Elements are: 
+          5          4          3          2          1
+mjd85@sutherland:~/Documents/214/code/06/project06$ exit
+exit
+
+Script done on Wed 30 Mar 2016 09:34:23 PM EDT
+Script started on Thu 31 Mar 2016 08:59:38 PM EDT
+mjd85@taylor:~/Documents/214/code/06/project06$ cat array.el
+;; array.el stores user input in array and outputs them
+;; By: Mark Davis
+;; Date: March 30, 2016
+;; Project 06, CS 214, Calvin College
+;;Precondition: inputs are numbers
+;; Output: elements in the array
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;readArray() prompts user for input and stores it
+;; Recieve: anArray, an array of numbers
+;;          size, its size
+;;Precondition: inputs are numbers
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun readArray(anArray count size)
+ (if (vectorp anArray) ;if anArray is a vector
+     (if (< count size) ;if the recursive count is smaller than the size
+	 (progn
+	  (setq element (read)) ;get input
+	  (aset anArray count element) ;store input in the array
+	  (readArray anArray (+ count 1) size))))) ;call readArray for more input
+
+readArray
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;printArray() outputs elements in an array
+;; Recieve: anArray, array of numbers
+;;          size, its size
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun printArray(anArray count)
+  (if (vectorp anArray) ;if parameter is an array
+      (if (< count (length anArray)) ;if the count is smaller than the length
+	    (progn
+	      (print (elt anArray count)) ;print out the element
+	      (printArray anArray (+ count 1));call printArray for more ouputs
+	      
+	    )
+	  )
+    )
+)
+
+printArray
+
+(defun main(size)
+  (interactive "nEnter the array's size: ") ;prompt for size of array
+  (setq anArray (make-vector size '0)) ;make array of size
+  (readArray anArray 0 size) ;call functions to read input and output array
+  (printArray anArray  0)
+)
+
+
+main
+
+
+;;;;;;;tests;;;;;;;;
+
+(readArray [0 0 0] 0 3)
+nil
+
+
+
+(printArray [1 2 3] 0)
+
+1
+
+2
+
+3
+nil
+
+
+
+
+
+
+
+
+mjd85@taylor:~/Documents/214/code/06/project06$ exit
+exit
+
+Script done on Thu 31 Mar 2016 08:59:44 PM EDT
+Script started on Tue 29 Mar 2016 09:33:36 PM EDT
+mjd85@goldberg:~/Documents/214/code/06/project06$ cat Array.rb
+# array.rb prompts for values to go in array and prints them
+# Precondition: values are doubles
+# Output: values of the array
+# Project06 CS 214, Calvin College
+# By: Mark Davis
+# Date: March 29, 2016
+########################################################
+
+###############################################
+# readArray() fills array with user's value
+# Receive: anArray, size of array
+################################################
+def readArray(array, size)
+	for i in 0 .. size-1 #loop to iterate through array
+		print "Enter value: "
+		value = gets.chomp.to_i #convert to integer
+		array[i] = value #store value in array
+	end
+	
+end
+
+
+###############################################
+# printArray() prints elements of the array
+# Receive: anArray, array's size
+################################################
+def printArray(array, size)
+	print "Values are: "
+	for i in 0 .. size-1 #loop to iterate through array
+		puts array[i] #output element in array
+	end
+end
+
+
+def main
+	print "Enter size of the array: " #prompt for input
+	size = gets.chomp.to_i #store input
+	array = Array.new(size) #declare array
+	readArray(array, size) #call read
+	printArray(array, size) #call print
+end
+
+main
+mjd85@goldberg:~/Documents/214/code/06/project06$ ruby Array.rb
+Enter size of the array: 4
+Enter value: 1
+Enter value: 2
+Enter value: 3
+Enter value: 4
+Values are: 1
+2
+3
+4
+mjd85@goldberg:~/Documents/214/code/06/project06$ ruby Array.rb
+Enter size of the array: 3
+Enter value: 7
+Enter value: 7
+Enter value: 7
+Values are: 7
+7
+7
+mjd85@goldberg:~/Documents/214/code/06/project06$ exit
+exit
+
+Script done on Tue 29 Mar 2016 09:34:03 PM EDT

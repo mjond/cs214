@@ -1,0 +1,8 @@
+%{
+#include <stdio.h>
+%}
+
+%%
+[_]*[0123456789]+[_]*           printf("NUMBER\n");
+[_]*[a-zA-Z][_]*[a-zA-Z0-9]*    printf("WORD\n");
+%%

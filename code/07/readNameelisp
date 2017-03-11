@@ -1,0 +1,5 @@
+(defun readName (theName)
+  (setq  nfirst (read-from-minibuffer "Please enter the first name "))
+  (setq nmid (read-from-minibuffer "Please enter the middle name "))
+  (setq nlast (read-from-minibuffer "Please enter the last name "))
+  (list nfirst nmid nlast))

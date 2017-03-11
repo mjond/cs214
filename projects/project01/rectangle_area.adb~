@@ -1,0 +1,42 @@
+-- rectangle_area.adb computes area of rectangles
+--
+-- input: length of rectangle
+--	  width of rectangle
+--precondition: length and width are positive
+--output: are of rectangle
+
+--created by: Mark Davis, cs 214, Calvin College
+--Date: February 9, 2016
+--Model code: CS 214 Lab01
+------------------------------------------------
+
+with Ada.Text_IO, Ada.Float_Text_IO;
+use  Ada.Text_IO, Ada.Float_Text_IO;
+
+procedure rectangle_area is
+	
+	length, width, area : float;
+
+	-- function rectangle_area computes rectangle's area, given length and width
+	-- paramater: length, width, both floats
+	-- precondition: length > 0, width > 0
+	-- return: the area of a rectangle
+	-------------------------------------
+	function rectangleArea(width, length: in float) return float is
+	begin
+		return length * width;
+	end rectangleArea;
+
+begin
+	Put_Line("To compute the area of a rectangle, ");
+	Put("enter its width: ");
+	Get(width);
+	Put("enter its length: ");
+	Get(length);
+
+	area:= rectangleArea(length, width);
+	
+	Put("The are is: ");
+	Put(area);
+	New_Line;
+end rectangle_area;

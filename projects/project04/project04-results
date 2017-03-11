@@ -1,0 +1,213 @@
+Script started on Tue 01 Mar 2016 06:19:36 PM EST
+mjd85@babbage:~/Documents/214/projects/project04$ cat factorial.java
+/* factorial.java computes the factorial of an input
+ *
+ * Input: number (an integer)
+ * PRE: input is positive
+ * Output: factorial of the input number
+ * Completed by: Mark Davis March 1, 2016
+ * Model Code: CS214 lab04
+ ********************************************************/
+import java.util.Scanner; 		// Get input
+
+class factorial {
+
+	/***************************************************************
+          factorial() computes factorial of a number
+    	* Receive: number, an integer
+   	* PRE: number is positive
+    	* Return: factorial of the number
+   	*/
+	public static int factorial(Integer number) { //declare function
+		int answer = 1; 		      //variable for computing factorial
+		for (int i = 2; i <= number; i++) {    //loop for factorial
+			answer *= i; 		      //compute answer
+		}
+		return answer;
+	}
+	
+	//main function
+	public static void main(String[] args) { 
+		Scanner keyboard = new Scanner(System.in);//scan keyboard for input
+		System.out.println("\nEnter a number: "); //prompt for input
+		int number = keyboard.nextInt();          //read number
+		System.out.println( number + "! = " + factorial(number));    //display factorial
+	}
+}
+
+
+mjd85@babbage:~/Documents/214/projects/project04$ javac factorial.java
+mjd85@babbage:~/Documents/214/projects/project04$ java factorial
+
+Enter a number: 
+4
+4! = 24
+mjd85@babbage:~/Documents/214/projects/project04$ java factorial
+
+Enter a number: 
+5
+5! = 120
+mjd85@babbage:~/Documents/214/projects/project04$ exit
+exit
+
+Script done on Tue 01 Mar 2016 06:20:10 PM EST
+Script started on Tue 01 Mar 2016 08:09:11 PM EST
+mjd85@babbage:~/Documents/214/projects/project04$ cat factorial.el
+; factorial.el computes factorials
+
+;input: a number
+;precondition: number is positive
+;output: factorial of number
+
+;created by: Mark Davis CS 214, Calvin College
+;date: March 1, 2015
+;Model Code: Project 1, CS 214
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;function factorial computes factorial
+;parameters: number
+;precondition: number>0
+;returns: factorial of number
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun factorial(n)
+  (if (= n 1)
+      1
+      (* n (factorial (- n 1))) ) )
+
+factorial
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;main function
+;input: number
+;output: factorial of number
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun main(n)
+  (interactive "nEnter a number: ")
+  (setq ans (factorial n))
+  (message "%i! = %i " n ans)
+)
+main
+
+
+;;;;tests;;;;;
+
+(main 4)
+"4! = 24 "
+
+(main 5)
+"5! = 120 "
+
+(main 6)
+"6! = 720 "
+
+
+
+
+
+
+mjd85@babbage:~/Documents/214/projects/project04$ exit
+exit
+
+Script done on Tue 01 Mar 2016 08:09:20 PM EST
+Script started on Tue 01 Mar 2016 06:40:26 PM EST
+mjd85@babbage:~/Documents/214/projects/project04$ cat factorial.rb
+#! /usr/bin/ruby
+# factorial.rb translates an average into a letter grade
+#created by: Mark Davis CS 214 project04
+#model code: project03, CS 214
+################################################################
+
+# function: factorial computes factorials
+# Input:  number (integer)
+# Precondition: number is positive
+# Output: factorial of the number
+
+def factorial(number)       #declare function
+	answer = 1          #variable for computing answer
+	for i in 2..number  #loop for factorial
+	   answer = answer * i #compute factorial
+	end
+	return answer #return factorial
+end
+
+########### main ##########
+if __FILE__ == $0
+	print "Enter a number: " #prompt for user input
+	number = gets.chomp.to_i #declare variable and store vale
+	print number             
+	print "! = "
+	puts factorial(number)  #output and call factorial()
+end
+mjd85@babbage:~/Documents/214/projects/project04$ ruby factorial.rb
+Enter a number: 4
+4! = 24
+mjd85@babbage:~/Documents/214/projects/project04$ fac   ruby facot rial.rb
+ruby: No such file or directory -- facorial.rb (LoadError)
+mjd85@babbage:~/Documents/214/projects/project04$ ruby factorial.rb
+Enter a number: 6
+6! = 720
+mjd85@babbage:~/Documents/214/projects/project04$ exit
+exit
+
+Script done on Tue 01 Mar 2016 06:41:43 PM EST
+Script started on Tue 01 Mar 2016 07:03:13 PM EST
+mjd85@babbage:~/Documents/214/projects/project04$ cat factoria. l.adb
+-- factorial.adb computes factorial
+--
+-- Input: number
+-- Precondition: number is positive
+-- Output: factorial of number
+-- by: Mark Davis
+--------------------------------------------------------------
+with Ada.Text_IO, Ada.Integer_Text_IO, Ada.Numerics.Elementary_Functions;
+use  Ada.Text_IO, Ada.Integer_Text_IO, Ada.Numerics.Elementary_Functions;
+
+-- Input:  number (Integer)
+-- Precondition: number is positive
+-- Output: factorial of number
+
+procedure factorial is
+
+	number : integer; --declare variables
+	answer : integer;
+		
+	function fact(number: in integer) return integer is --declare function
+	begin
+	answer := 1; --assign value 1 to answer
+		for I in Integer range 2 .. number loop --declare loop to comput factorial
+			answer := answer * I; --compute factorial
+		end loop;
+	return answer; --return the final answer
+	end fact;
+
+begin
+	Put_Line("Enter a number: "); --prompt for input
+	Get(number);
+	--output message
+	Put(number);
+	Put("! = ");
+	Put(fact(number)); --call factorial()
+	New_Line;
+end factorial; 
+mjd85@babbage:~/Documents/214/projects/project04$ gnatmak       cat factorial.adbexit[Kruby factorial.rb[1Porial.rb[1@torial.rb[1Pcat factorial.rbexit[Kjava factorialgnat                  gnatmake[1P[1@make factorial.adb
+gcc-4.6 -c factorial.adb
+gnatbind -x factorial.ali
+gnatlink factorial.ali
+mjd85@babbage:~/Documents/214/projects/project04$ ./factorial
+Enter a number: 
+4
+          4! =          24
+mjd85@babbage:~/Documents/214/projects/project04$ ./factorial
+Enter a number: 
+5
+          5! =         120
+mjd85@babbage:~/Documents/214/projects/project04$ ./factorial
+Enter a number: 
+6
+          6! =         720
+mjd85@babbage:~/Documents/214/projects/project04$ exit
+exit
+
+Script done on Tue 01 Mar 2016 07:04:02 PM EST

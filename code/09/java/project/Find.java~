@@ -1,0 +1,25 @@
+/* find.java uses the LinkedList framework
+ * to find an element in a linked list
+ *
+ * CS 214, project09
+ * By: Mark Davis
+ * Date: April 15, 2016
+ */
+
+import java.util.LinkedList;
+import java.util.Iterator;
+
+class Find {
+
+    ////////////////////////////////////////////////////
+    // find() finds a given element in a list        ///
+    // Receive: aList, a list                        ///
+    //          aValue, an integer                   ///
+    // Output: position of given value               ///
+    ////////////////////////////////////////////////////
+
+
+
+
+}
+

@@ -1,0 +1,241 @@
+Script started on Tue 05 Apr 2016 07:16:04 PM EDT
+mjd85@wirth:~/Documents/214/code/07$ cat namer.rb
+# namer.rb tests class Name and its operations
+#
+# Begun by: Dr. Adams, for CS 214 at Calvin College.
+# Completed by: Mark Davis
+# Date: March 31, 2016
+####################################################
+
+require 'test/unit/assertions'   # needed for assert
+include Test::Unit::Assertions
+
+class Name
+
+  def initialize(first, middle, last) #constructor for ruby
+	@first, @middle, @last = first, middle, last #instance variables
+  end
+
+
+  attr_reader :first, :middle, :last #accessors
+
+
+  def fullName #accessor for full name
+	"#{first} #{middle} #{last}"
+  end
+
+
+  def print
+	return fullName #print function
+  end
+
+end
+
+  def testName
+   name = Name.new("John", "Paul", "Jones")
+
+   assert name.first == "John", "first failed"
+   assert name.middle == "Paul", "middle failed"
+   assert name.last == "Jones", "last failed"
+   assert name.fullName == "John Paul Jones", "fullName failed"
+   assert name.print == "John Paul Jones", "print failed"
+   
+   print "All tests passed!\n"
+  end
+
+
+testName
+
+mjd85@wirth:~/Documents/214/code/07$ gnatmake namer.adb
+gcc-4.6 -c namer.adb
+gnatbind -x namer.ali
+gnatlink namer.ali
+mjd85@wirth:~/Documents/214/code/07$ ./namer
+John    Paul    Jones   
+All tests passed!
+mjd85@wirth:~/Documents/214/code/07$ exit
+exit
+
+Script done on Tue 05 Apr 2016 07:16:19 PM EDT
+Script started on Tue 05 Apr 2016 07:16:29 PM EDT
+mjd85@wirth:~/Documents/214/code/07$ cat namer.el
+;;; namer.el simulates and tests an e-LISP Name type.
+;;; Begun by: Dr. Adams, CS 214 at Calvin College.
+;;; Completed by:Mark Davis
+;;; Date: April 4, 2016
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Name constructs a name from three strings.      ;;
+;;; Receive: first, middle and last, three strings. ;;
+;;; Return: the triplet (first middle last).        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun Name ( myFirst myMiddle myLast)
+(list myFirst myMiddle myLast))
+Name
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; getFirst extracts the first name of a name object.;
+;;; Receive: theName, a Name.                       
+;;; Return: the first string in theName.           
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun getFirst (theName)
+  (car theName))
+getFirst
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; getMiddle extracts the middle name of a name object.
+;;; Receive: theName, a Name.                      
+;;; Return: the second string in theName.           
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun getMiddle (theName)
+  (car (cdr theName)))
+getMiddle
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; getLast extracts the last name of a name object.
+;;; Receive: theName, a Name.                    
+;;; Return: the third string in theName.       
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun getLast (theName)
+  (car (cdr  (cdr theName))))
+
+getLast
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; getFullName returns a full name in F-M-L order. 
+;;; Return: myFirst, myMiddle, myLast.           
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun getFullName (theName)
+  (concat (getFirst theName) " " (getMiddle theName) " "  (getLast theName)))
+
+getFullName
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; printName displays a name object.         
+;;; Receive: theName, a Name,                 
+;;;          buffer, the name of a buffer.   
+;;; Output: the strings in theName to buffer. ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun printName (theName buf)
+  (princ (getFullName theName) buf)
+  (setq name theName))
+printName
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; A simple driver for our Name functions. ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(progn
+  (require 'cl)                              ; assert
+  (setq aName (Name "John" "Paul" "Jones"))  ; build a Name
+
+  (assert (equal (getFirst aName) "John" ))  ; test it
+  (assert (equal (getMiddle aName) "Paul" ))
+  (assert (equal (getLast aName) "Jones" ))
+  (assert (equal (getFullName aName) "John Paul Jones" ))
+
+  (setq buf (get-buffer "namer.el"))         ; buf = this buffer
+  (assert (eq (printName aName buf) aName) ) ; output
+  (terpri buf)                               ; newline
+  (princ "All tests passed!")                ; feedback
+  (terpri buf))                              ; newline
+John Paul Jones
+All tests passed!
+t
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mjd85@wirth:~/Documents/214/code/07$ exit
+exit
+
+Script done on Tue 05 Apr 2016 07:16:35 PM EDT
+Script started on Fri 01 Apr 2016 09:12:15 AM EDT
+mjd85@hollerith:~/Documents/214/code/07$ cat namer.rb
+# namer.rb tests class Name and its operations
+#
+# Begun by: Dr. Adams, for CS 214 at Calvin College.
+# Completed by: Mark Davis
+# Date: March 31, 2016
+####################################################
+
+require 'test/unit/assertions'   # needed for assert
+include Test::Unit::Assertions
+
+class Name
+
+  def initialize(first, middle, last) #constructor for ruby
+	@first, @middle, @last = first, middle, last #instance variables
+  end
+
+
+  attr_reader :first, :middle, :last #accessors
+
+
+  def fullName #accessor for full name
+	"#{first} #{middle} #{last}"
+  end
+
+
+  def print
+	return fullName #print function
+  end
+
+end
+
+  def testName
+   name = Name.new("John", "Paul", "Jones")
+
+   assert name.first == "John", "first failed"
+   assert name.middle == "Paul", "middle failed"
+   assert name.last == "Jones", "last failed"
+   assert name.fullName == "John Paul Jones", "fullName failed"
+   assert name.print == "John Paul Jones", "print failed"
+   
+   print "All tests passed!\n"
+  end
+
+
+testName
+
+mjd85@hollerith:~/Documents/214/code/07$ ruby.  namer.rb
+All tests passed!
+mjd85@hollerith:~/Documents/214/code/07$ exit
+exit
+
+Script done on Fri 01 Apr 2016 09:12:24 AM EDT

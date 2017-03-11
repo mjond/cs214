@@ -1,0 +1,67 @@
+/* A class to test the Name class
+ * Created by: Dr. Nelesen
+ *
+ */
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+
+public class TemperatureTest  // a class used for JUnit testing...
+{
+    
+    @Test
+    public void testGetDegree(){
+	Temperature theTemp = new Temp("C", 30);
+	assertEquals(theName.getDegree(), 30);
+    }
+
+    @Test
+    public void testGetScale(){
+	Temperature theTemp = new Temp("C", 30);
+	assertEquals(theName.getScale), "Grace");
+    }
+/*
+    @Test
+    public void testGetLast(){
+	Name theName = new Name("Johnna", "Paulina", "Jones");
+	assertEquals(theName.getLast(), "Jones");
+    }
+
+   @Test
+   public void testSetFirst() {
+	Name theName = new Name("Johnna", "Paulina", "Jones");
+	theName.setFirst("Mark");
+	assertEquals(theName.getFirst(), "Mark");
+	}	
+
+   @Test
+   public void testSetMiddle() {
+	Name theName = new Name("Johnna", "Paulina", "Jones");
+	theName.setMiddle("Mark");
+	assertEquals(theName.getMiddle(), "Mark");
+	}
+
+   @Test
+   public void testSetLast() {
+	Name theName = new Name("Johnna", "Paulina", "Jones");
+	theName.setLast("Mark");
+	assertEquals(theName.getLast(), "Mark");
+	}
+
+   @Test
+    public void testlfmi() {  //lmfi 
+	Name theName = new Name("John", "Paul", "Jones");
+	assertEquals(theName.lfmi(), "Jones, John P.");
+    }	
+
+   @Test
+   public void testReadName() {
+	Name theName = new Name(" ", " ", " ");
+	theName.readName();
+	//enter "Mark Jonathan Davis"
+	assertEquals(theName.getFirst(), "Mark");
+	assertEquals(theName.getMiddle(), "Jonathan");
+	assertEquals(theName.getLast(), "Davis");
+   }	
+} */

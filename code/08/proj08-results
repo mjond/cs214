@@ -1,0 +1,1094 @@
+Script started on Thu 14 Apr 2016 09:03:41 PM EDT
+mjd85@chomsky:~/Documents/214/code/08/ada/project$ cat tmep   emp
+cat: temp: No such file or directory
+mjd85@chomsky:~/Documents/214/code/08/ada/project$ cat temp_package.adb
+--temp_package defines operations for Temperature type
+
+--Created by: Mark Davis
+--Date: April 12, 2016
+--project08, CS214, CALVIN COLLEGE
+-------------------------------------------------------
+
+with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Float_Text_IO; use Ada.Float_Text_IO;
+
+package body Temp_Package is
+
+	newTemp1, newTemp2 : Temperature; --declare copy temperatures
+
+----------------------------------------------
+  -- Init initializes a Temperature variable          
+  -- Receive: Temp, a Temperature variable
+  --          degree, the degree
+  -- 	      scale, the scale  
+  -- Return: Temp, its fields set to degree
+  -- 				and scale     
+  ----------------------------------------------
+  procedure Init(Temp: out Temperature; degree : in float; scale : in character) is
+  begin
+	if isValid(degree, scale) then
+	  Temp.myDegree := degree;
+	  Temp.myScale := scale;
+	end if;
+  end Init;
+
+  ----------------------------------------------
+  -- isValid() validates a temperature       
+  -- Receive: scale, a string
+  -- 	      degree, a float                     
+  -- PRE: scale and degree have been initialized            
+  -- Return: true or false                     
+  ----------------------------------------------
+  function isValid(degree : in float; scale : in character) return boolean is
+  begin
+	if scale = 'k' or scale = 'K' then --if Kelvin
+		if degree < 0.0 then --and below absolute zero
+		  return false;
+		end if;
+
+	elsif scale = 'c' or scale = 'C' then --if Celsius
+		if degree < -237.0 then --and below absolute zero
+		  return false;
+		end if;
+
+	elsif scale = 'f' or scale = 'F' then -- if Fahrenheit
+		if degree < -459.0 then --and below absolute zero
+		  return false;
+		end if;
+	else
+		return true; --otherwise it's valid and return true
+	end if;
+	return true;
+  end isValid;
+
+  ----------------------------------------------
+  -- getDegree(Temperature) retrieves Temp.myDegree       
+  -- Receive: Temp, a Temperature                      
+  -- PRE: Temp has been initialized.            
+  -- Return: Temp.myDegree                     
+  ----------------------------------------------
+  function getDegree(Temp : in Temperature) return Float is
+  begin
+	return Temp.myDegree;
+  end getDegree;
+
+  ----------------------------------------------
+  -- getScale(Temperature) retrieves Temp.myDegree       
+  -- Receive: Temp, a Temperature                      
+  -- PRE: Temp has been initialized.            
+  -- Return: Temp.myScale                     
+  ----------------------------------------------
+  function getScale(Temp : in Temperature) return character is
+  begin
+	return Temp.myScale;
+  end getScale;
+
+  ----------------------------------------------
+  -- setCelsius() sets a temperature to Celsius
+  -- Receive: Temp, a temperature                      
+  -- PRE: Temp has been initialized.            
+  -- POST: temperature now in celsius                     
+  ----------------------------------------------
+  procedure setCelsius(Temp : out Temperature) is
+  begin
+	if Temp.myScale = 'k' or Temp.myScale = 'K' then
+	  Temp.myDegree := (Temp.myDegree - 273.15); -- conversion equation
+	  Temp.myScale := 'C'; --change scale
+	end if;
+	if Temp.myScale = 'f' or Temp.myScale = 'F' then
+	  Temp.myDegree := ((Temp.myDegree - 32.0) * (5.0/9.0)); --conversion equation
+	  Temp.myScale := 'C';
+	end if;
+  end setCelsius;
+
+  ----------------------------------------------
+  -- setKelvin() sets a temperature to Kelvin
+  -- Receive: temp, a Temperature                      
+  -- PRE: Temp has been initialized.            
+  -- POST: temperature now in Kelvin                     
+  ----------------------------------------------
+  procedure setKelvin(Temp : out Temperature) is
+  begin
+	if Temp.myScale = 'C' or Temp.myScale = 'c' then
+	  Temp.myDegree := (Temp.myDegree + 273.15); -- conversion equation
+	  Temp.myScale := 'K';
+	end if;
+	if Temp.myScale = 'f' or Temp.myScale = 'F' then
+	  Temp.myDegree := ((Temp.myDegree + 459.67) * (5.0/9.0)); -- conversion equation
+	  Temp.myScale := 'K';
+	end if;
+  end setKelvin;
+
+  ----------------------------------------------
+  -- setFahrenheit() sets a temperature to Fahrenheit
+  -- Receive: Temp, a Temperature                      
+  -- PRE: Temp has been initialized.            
+  -- POST: temperature now in Fahrenheit                     
+  ----------------------------------------------
+  procedure setFahrenheit(Temp : out Temperature) is
+  begin
+	if Temp.myScale = 'c' or Temp.myScale = 'C' then
+	  Temp.myDegree := (Temp.myDegree * (9.0/5.0) + 32.0); -- conversion equation
+	  Temp.myScale := 'F';
+	end if;
+	if Temp.myScale = 'k' or Temp.myScale = 'K' then
+	  Temp.myDegree := ((Temp.myDegree * (9.0/5.0)) - 459.67); --conversion equation
+	  Temp.myScale := 'F';
+	end if;
+  end setFahrenheit;
+
+  ----------------------------------------------
+  -- raiseTemp() adds a new degree to a Temperature
+  -- Receive: Temp, a Temperature
+  -- 	      addition, a float                      
+  -- PRE: Temp has been initialized.            
+  -- POST: myDegree has new value                     
+  ----------------------------------------------
+  procedure raiseTemp(Temp : out Temperature; addition : in float) is
+  begin
+	Temp.myDegree := Temp.myDegree + addition; -- add new degree
+  end raiseTemp;
+
+
+  ----------------------------------------------
+  -- lowerTemp() subtracts a new degree to a Temperature
+  -- Receive: Temp, a Temperature
+  -- 	      subtraction, a float                      
+  -- PRE: Temp has been initialized.            
+  -- POST: myDegree has new value                     
+  ----------------------------------------------
+  procedure lowerTemp(Temp : out Temperature; subtraction : in float) is
+  begin
+	Temp.myDegree := Temp.myDegree - subtraction; -- subtract new degree
+  end lowerTemp;
+
+  ----------------------------------------------
+  -- equals() compares two temperatures
+  -- Receive: Temp, a Temperature
+  -- 	      Temp_2, a Temperature                     
+  -- PRE: Temp has been initialized. 
+  --  	  Temp_2 has been initialized           
+  -- Return: true or false                    
+  ----------------------------------------------
+  function equals(Temp : in Temperature; Temp_2 : in Temperature) return boolean is
+  begin
+	Init(newTemp1, getDegree(Temp), getScale(Temp)); -- create copies
+	Init(newTemp2, getDegree(Temp_2), getScale(Temp_2)); -- so values are not changed
+
+	setFahrenheit(newTemp1); --convert to F
+	setFahrenheit(newTemp2); --so they're in the same scale
+
+	if newTemp1.myDegree = newTemp2.myDegree then --if equal, return true; else false
+		return true;
+	else
+		return false;
+	end if;
+
+  end equals;
+
+  ----------------------------------------------
+  -- lessThan() compares two temperatures
+  -- Receive: Temp, a Temperature
+  -- 	      Temp_2, a Temperature                     
+  -- PRE: Temp has been initialized. 
+  --  	  Temp_2 has been initialized           
+  -- Return: true or false                    
+  ----------------------------------------------
+  function lessThan(Temp : in Temperature; Temp_2 : in Temperature) return boolean is
+  begin
+ 	Init(newTemp1, getDegree(Temp), getScale(Temp)); --create copies
+	Init(newTemp2, getDegree(Temp_2), getScale(Temp_2)); --so real values are not changed
+
+	setFahrenheit(newTemp1); -- set to F
+	setFahrenheit(newTemp2); -- so same scale is used in comparison
+
+	if newTemp1.myDegree < newTemp2.myDegree then --if they are equal, return true; else false
+		return true;
+	else
+		return false;
+	end if;
+  end lessThan;
+
+  ----------------------------------------------
+  -- printTemp() prints a temperature
+  -- Receive: Temp, a Temperature                    
+  -- PRE: Temp has been initialized. 
+  -- Return: string of temperature                  
+  ---------------------------------------------- 
+  procedure printTemp(Temp: in Temperature) is
+  begin
+	Put( Temp.myDegree, Aft => 2, Exp => 0  ); --ouput Degree w/out scientific notation
+	Put( " " );
+	Put( Temp.myScale ); --output scale
+  end printTemp;
+
+  ----------------------------------------------
+  -- readTemp() reads a Temperature from user
+  -- Receive: Temp, a Temperature                    
+  -- PRE: Temp has been initialized. 
+  -- POST: Temp has new values               
+  ---------------------------------------------- 
+  procedure readTemp(Temp: out Temperature) is
+	user_input : float; --declare variables for input
+	user_scale : String(1..8) := "        ";
+  begin
+	Put("Enter degree: ");
+	Get(user_input); --get input
+	Put("Enter scale: ");
+	Get(user_scale); --get input
+
+	if isValid(user_input, user_scale(1)) then --if the entered values are valid
+		Temp.myDegree := user_input; --set instance variables
+		Temp.myScale := user_scale(1);
+	else
+		Put("Invalid - readTemp()"); --otherwise err message
+	end if;
+  end readTemp;
+
+end Temp_Package;
+
+  
+
+
+mjd85@chomsky:~/Documents/214/code/08/ada/project$ cat temp_a package.ads
+-- name_package.ads declares the Name type and its operations.
+--
+-- Begun by: Dr. Adams, CS 214 at Calvin College.
+-- Completed by: Mark Davis
+-- Date: April 8, 2016
+--------------------------------------------------------------
+
+package Temp_Package is
+
+type Temperature is private;
+
+procedure Init(Temp: out Temperature; degree : in float; scale : in character);
+function isValid(degree : in float; scale : in character) return boolean;
+function getDegree(Temp : in Temperature) return Float;
+function getScale(Temp : in Temperature) return character;
+procedure setCelsius(Temp : out Temperature);
+procedure setKelvin(Temp : out Temperature);
+procedure setFahrenheit(Temp : out Temperature);
+procedure raiseTemp(Temp : out Temperature; addition : in float);
+procedure lowerTemp(Temp : out Temperature; subtraction : in float);
+function equals(Temp : in Temperature; Temp_2 : in Temperature) return boolean;
+function lessThan(Temp : in Temperature; Temp_2 : in Temperature) return boolean;
+procedure printTemp(Temp: in Temperature) ; 
+procedure readTemp(Temp: out Temperature);
+
+private
+	type Temperature is record
+	myDegree : float;
+	myScale : character;
+	end record;
+
+end Temp_Package;
+mjd85@chomsky:~/Documents/214/code/08/ada/project$ cat testrunner.adb
+-- TestRunner.adb "test-drives" the Temperature type.
+--
+-- By: Mark Davis
+-- Date: April 14, 2016
+----------------------------------------------
+
+with Ada.Text_IO; use Ada.Text_IO;
+with Temp_Package; use Temp_Package;
+with Ada.Float_Text_IO; use Ada.Float_Text_IO;
+
+
+procedure TestRunner is
+
+baseTemp : Temp_Package.Temperature;
+limitTemp : Temp_Package.Temperature;
+stepValue : float;
+
+begin
+   
+	Put("Enter values for base temperature: ");
+	readTemp(baseTemp);
+
+	Put("Enter values for limit temperature: ");
+	readTemp(limitTemp);
+
+	Put("Enter step value: ");
+	Get(stepValue);
+
+	while(lessThan(baseTemp, limitTemp))
+	 loop
+	 printTemp(baseTemp); 
+	 Put("   ");
+	 setCelsius(baseTemp);
+	 printTemp(baseTemp); 
+	 Put("   ");
+	 setKelvin(baseTemp);
+	 printTemp(baseTemp); 
+	 Put("   ");
+	 setFahrenheit(baseTemp);
+	 raiseTemp(baseTemp, stepValue);
+	 New_Line;
+	end loop;
+
+end TestRunner;
+mjd85@chomsky:~/Documents/214/code/08/ada/project$ gnatmake testrunner.adb
+gnatmake: "testrunner" up to date.
+mjd85@chomsky:~/Documents/214/code/08/ada/project$ ./testrunner
+Enter values for base temperature: Enter degree: 0.0
+Enter scale: F       
+Enter values for limit temperature: Enter degree: 100.0
+Enter scale: C       
+Enter step value: 2.5
+ 0.00 F   -17.78 C   255.37 K   
+ 2.50 F   -16.39 C   256.76 K   
+ 5.00 F   -15.00 C   258.15 K   
+ 7.50 F   -13.61 C   259.54 K   
+10.00 F   -12.22 C   260.93 K   
+12.50 F   -10.83 C   262.32 K   
+15.00 F   -9.44 C   263.71 K   
+17.50 F   -8.06 C   265.09 K   
+20.00 F   -6.67 C   266.48 K   
+22.50 F   -5.28 C   267.87 K   
+25.00 F   -3.89 C   269.26 K   
+27.50 F   -2.50 C   270.65 K   
+30.00 F   -1.11 C   272.04 K   
+32.50 F    0.28 C   273.43 K   
+35.00 F    1.67 C   274.82 K   
+37.50 F    3.06 C   276.21 K   
+40.00 F    4.44 C   277.59 K   
+42.50 F    5.83 C   278.98 K   
+45.00 F    7.22 C   280.37 K   
+47.50 F    8.61 C   281.76 K   
+50.00 F   10.00 C   283.15 K   
+52.50 F   11.39 C   284.54 K   
+55.00 F   12.78 C   285.93 K   
+57.50 F   14.17 C   287.32 K   
+60.00 F   15.55 C   288.70 K   
+62.50 F   16.94 C   290.09 K   
+65.00 F   18.33 C   291.48 K   
+67.50 F   19.72 C   292.87 K   
+70.00 F   21.11 C   294.26 K   
+72.50 F   22.50 C   295.65 K   
+75.00 F   23.89 C   297.04 K   
+77.50 F   25.28 C   298.43 K   
+80.00 F   26.67 C   299.82 K   
+82.50 F   28.05 C   301.20 K   
+85.00 F   29.44 C   302.59 K   
+87.50 F   30.83 C   303.98 K   
+90.00 F   32.22 C   305.37 K   
+92.50 F   33.61 C   306.76 K   
+95.00 F   35.00 C   308.15 K   
+97.50 F   36.39 C   309.54 K   
+100.00 F   37.78 C   310.93 K   
+102.50 F   39.17 C   312.32 K   
+105.00 F   40.55 C   313.70 K   
+107.50 F   41.94 C   315.09 K   
+110.00 F   43.33 C   316.48 K   
+112.50 F   44.72 C   317.87 K   
+115.00 F   46.11 C   319.26 K   
+117.50 F   47.50 C   320.65 K   
+120.00 F   48.89 C   322.04 K   
+122.50 F   50.28 C   323.43 K   
+125.00 F   51.66 C   324.81 K   
+127.50 F   53.05 C   326.20 K   
+130.00 F   54.44 C   327.59 K   
+132.50 F   55.83 C   328.98 K   
+135.00 F   57.22 C   330.37 K   
+137.50 F   58.61 C   331.76 K   
+140.00 F   60.00 C   333.15 K   
+142.50 F   61.39 C   334.54 K   
+145.00 F   62.78 C   335.93 K   
+147.50 F   64.16 C   337.31 K   
+150.00 F   65.55 C   338.70 K   
+152.50 F   66.94 C   340.09 K   
+155.00 F   68.33 C   341.48 K   
+157.50 F   69.72 C   342.87 K   
+160.00 F   71.11 C   344.26 K   
+162.50 F   72.50 C   345.65 K   
+165.00 F   73.89 C   347.04 K   
+167.50 F   75.28 C   348.43 K   
+170.00 F   76.66 C   349.81 K   
+172.50 F   78.05 C   351.20 K   
+175.00 F   79.44 C   352.59 K   
+177.50 F   80.83 C   353.98 K   
+180.00 F   82.22 C   355.37 K   
+182.50 F   83.61 C   356.76 K   
+185.00 F   85.00 C   358.15 K   
+187.50 F   86.39 C   359.54 K   
+190.00 F   87.78 C   360.93 K   
+192.50 F   89.16 C   362.31 K   
+195.00 F   90.55 C   363.70 K   
+197.50 F   91.94 C   365.09 K   
+200.00 F   93.33 C   366.48 K   
+202.50 F   94.72 C   367.87 K   
+205.00 F   96.11 C   369.26 K   
+207.50 F   97.50 C   370.65 K   
+209.99 F   98.89 C   372.04 K   
+mjd85@chomsky:~/Documents/214/code/08/ada/project$ exit
+exit
+
+Script done on Thu 14 Apr 2016 09:04:36 PM EDT
+Script started on Thu 14 Apr 2016 09:30:20 AM EDT
+mjd85@hollerith:~/Documents/214/code/08/ruby/project$ cat Temer  perature.ruby
+cat: Temperature.ruby: No such file or directory
+mjd85@hollerith:~/Documents/214/code/08/ruby/project$ cat Temperature.rb
+#Temperature.rb is a class for Temperature
+#
+#Created by: Mark Davis, CS 214, CALVIN COLLEGE
+#Date: April 12, 2016
+#project08
+##############################################
+module Temperatures
+
+class Temperature
+
+  #####################################################
+  # initialize() constructs Temperature instance variables
+  # POST: myDegree and myScale have values
+  #####################################################
+  def initialize(degree, scale)
+	if isValid(degree, scale)   #check if valid
+		@myDegree = degree #then set instance variables
+		@myScale = scale
+	end
+  end
+
+  #####################################################
+  # isValid() checks valid scales and temperatures
+  # Return: true if valid, false if not valid
+  #####################################################
+  def isValid(degree, scale)
+	if scale == "k" or scale == "K" and degree < 0.0 #validity for Kelvin
+		return false
+	elsif scale == "c" or scale == "C" and degree < -237.0 #validity for Celsius
+		return false
+	elsif scale == "f" or scale == "F" and degree < -459.0 #validity for F
+		return false
+	else
+		return true
+	end
+  end
+
+
+  #####################################################
+  # attr_reader is accessor for instance variables
+  # Return: myDegree or myScale
+  #####################################################
+  attr_reader :myDegree, :myScale #accessors for myDegree and myScale
+
+  #####################################################
+  # setCelsius() sets values to Celsius from other scales
+  # POST: myDegree has new value, myScale has new value
+  #####################################################
+  def setCelsius
+	if @myScale == 'K' or @myScale == 'k'
+		@myDegree = @myDegree - 273.15 #conversion equation
+		@myScale = 'C'
+	elsif @myScale == 'F' or @myScale == 'f'
+		@myDegree = (@myDegree - 32.0) * (5.0/9.0) #conversion equation
+		@myScale = 'C'
+	end
+  end
+
+  #####################################################
+  # setKelvin() sets values to Kelvin from other scales
+  # POST: myDegree has new value, myScale has new value
+  #####################################################
+  def setKelvin
+	if @myScale == 'C' or @myScale == 'c'
+		@myDegree = @myDegree + 273.15 #conversion equation
+		@myScale = 'K'
+	elsif @myScale == 'F' or @myScale == 'f'
+		@myDegree = (@myDegree + 459.67) * (5.0/9.0) #conversion equation
+		@myScale = 'K'
+	end
+  end
+
+  #####################################################
+  # setFahrenheit() sets values to F from other scales
+  # POST: myDegree has new value, myScale has new value
+  #####################################################
+  def setFahrenheit
+	if @myScale == 'C' or @myScale == 'c'
+		@myDegree = @myDegree * (9.0/5.0) + 32.0 #conversion equation
+		@myScale = 'F'
+	elsif @myScale == 'K' or @myScale == 'k'
+		@myDegree = @myDegree * (9.0/5.0) - 459.67 #conversion equation
+		@myScale = 'F'
+	end
+  end
+
+  #####################################################
+  # raise() raises value of myDegree
+  # POST: myDegree has new value
+  #####################################################
+  def raise(addition)
+	@myDegree = @myDegree + addition #add on new temperature
+  end
+
+  #####################################################
+  # lower() lowers value of myDegree
+  # POST: myDegree has new value
+  #####################################################
+  def lower(subtraction)
+	@myDegree = @myDegree - subtraction #add on new temperature
+  end
+
+  #####################################################
+  # equals() compares two temperatures for equality
+  # returns true if equal, false if not equal
+  #####################################################
+  def equals(deg2)
+	result = false
+	if @myScale == deg2.myScale #if scale is equal
+		if @myDegree ==	deg2.myDegree #if degree is equal
+			result = true
+		end
+	else
+		if @myScale == 'K' or @myScale == 'k' #if Kelvin is scale
+			deg2.setKelvin
+		elsif @myScale == 'C' or @myScale == 'c' #if scale is Celsius
+			deg2.setCelsius
+		elsif @myScale == 'F' or @myScale == 'f' #if scale is F
+			deg2.setFahrenheit
+		end
+		if @myDegree == deg2.myDegree #if degrees are equal
+			result true
+		end
+	end
+	return result	
+  end
+
+  #####################################################
+  # lessThan() compares two temperatures for less than
+  # returns true if less, false if not less
+  #####################################################
+  def lessThan(deg2)
+	result = false
+	if @myScale == deg2.myScale #if degrees are equal
+		if @myDegree <	deg2.myDegree #if degrees are equal
+			result = true
+		end
+	else
+		if @myScale == 'K' or @myScale == 'k' #if scale is Kelvin
+			deg2.setKelvin
+		elsif @myScale == 'C' or @myScale == 'c' #if scale is Celsius
+			deg2.setCelsius
+		elsif @myScale == 'F' or @myScale == 'f' #if scale is F
+			deg2.setFahrenheit
+		end
+		if @myDegree < deg2.myDegree #if less than
+			result = true
+		end
+	end
+	return result
+  end
+
+  #####################################################
+  # readTemp() reads in a Temperature from user
+  # POST: Temperature has new scale and new degree
+  #####################################################
+  def readTemp
+	#get input for degree
+	puts "Enter degree: "
+	degree = gets.chomp.to_f #convert to a float
+	@myDegree = degree
+	#get input for scale
+	puts "Enter scale: "
+	scale = gets.chomp #convert to a char
+	@myScale = scale
+  end
+
+  #####################################################
+  # printTemp() prints out a Temperature
+  # POST: Temperature has new scale and new degree
+  #####################################################
+  def printTemp
+	"#{myDegree} #{myScale}" #return on one line
+  end
+
+end
+end
+mjd85@hollerith:~/Documents/214/code/08/ruby/project$ cat TestRunner.rb
+#TestRunner.rb tests Temperature.rb and outputs chart
+#
+#Created by: Mark Davis
+#CALVIN COLLEGE, CS 214, project08
+#April 12, 2016
+#####################################################
+
+require "./Temperature"
+
+def testTemp
+	#get user input for base temperature
+	baseTemp = Temperatures::Temperature.new(100.0, "F")
+	puts "Enter values for base temperature"
+	baseTemp.readTemp()
+
+	#get user input for limit temperature
+	limitTemp = Temperatures::Temperature.new(100.0, "F")
+	puts "Enter values for limit temperature"
+	limitTemp.readTemp()
+
+	#get user input for step value
+	puts "Enter step value: "
+	stepValue = gets.chomp.to_f
+
+	while ( baseTemp.lessThan(limitTemp) ) do
+		print baseTemp.printTemp 
+		print " "
+		baseTemp.setCelsius
+		print baseTemp.printTemp 
+		print " "
+		baseTemp.setKelvin
+		print baseTemp.printTemp 
+		puts " "
+		baseTemp.setFahrenheit
+		baseTemp.raise(stepValue)
+	end 
+end
+
+testTemp
+mjd85@hollerith:~/Documents/214/code/08/ruby/project$ ruby TestRunner.rb
+Enter values for base temperature
+Enter degree: 
+0.0
+Enter scale: 
+F
+Enter values for limit temperature
+Enter degree: 
+100.0
+Enter scale: 
+C
+Enter step value: 
+2.5
+0.0 F -17.77777777777778 C 255.3722222222222 K 
+2.499999999999943 F -16.38888888888892 C 256.76111111111106 K 
+4.999999999999886 F -15.000000000000064 C 258.1499999999999 K 
+7.4999999999998295 F -13.611111111111207 C 259.5388888888888 K 
+9.999999999999773 F -12.22222222222235 C 260.92777777777764 K 
+12.499999999999716 F -10.833333333333492 C 262.3166666666665 K 
+14.999999999999659 F -9.444444444444635 C 263.70555555555535 K 
+17.499999999999602 F -8.055555555555777 C 265.0944444444442 K 
+19.999999999999545 F -6.666666666666919 C 266.48333333333306 K 
+22.49999999999949 F -5.277777777778062 C 267.8722222222219 K 
+24.99999999999943 F -3.888888888889205 C 269.2611111111108 K 
+27.499999999999375 F -2.5000000000003473 C 270.64999999999964 K 
+29.999999999999318 F -1.1111111111114902 C 272.0388888888885 K 
+32.49999999999926 F 0.27777777777736723 C 273.42777777777735 K 
+34.999999999999204 F 1.6666666666662246 C 274.8166666666662 K 
+37.49999999999915 F 3.055555555555082 C 276.20555555555507 K 
+39.99999999999909 F 4.444444444443939 C 277.5944444444439 K 
+42.499999999999034 F 5.833333333332797 C 278.9833333333328 K 
+44.99999999999898 F 7.222222222221654 C 280.37222222222164 K 
+47.49999999999892 F 8.611111111110512 C 281.7611111111105 K 
+49.99999999999886 F 9.99999999999937 C 283.14999999999935 K 
+52.499999999998806 F 11.388888888888227 C 284.5388888888882 K 
+54.999999999998806 F 12.777777777777116 C 285.92777777777707 K 
+57.49999999999869 F 14.166666666665941 C 287.3166666666659 K 
+59.99999999999869 F 15.55555555555483 C 288.7055555555548 K 
+62.49999999999858 F 16.944444444443654 C 290.09444444444364 K 
+64.99999999999858 F 18.333333333332543 C 291.4833333333325 K 
+67.49999999999847 F 19.72222222222137 C 292.87222222222135 K 
+69.99999999999847 F 21.111111111110258 C 294.2611111111102 K 
+72.49999999999835 F 22.499999999999087 C 295.64999999999907 K 
+74.99999999999835 F 23.888888888887973 C 297.0388888888879 K 
+77.49999999999824 F 25.2777777777768 C 298.4277777777768 K 
+79.99999999999824 F 26.666666666665687 C 299.81666666666564 K 
+82.49999999999812 F 28.055555555554516 C 301.2055555555545 K 
+84.99999999999812 F 29.444444444443402 C 302.59444444444335 K 
+87.49999999999801 F 30.83333333333223 C 303.9833333333322 K 
+89.99999999999801 F 32.22222222222112 C 305.3722222222211 K 
+92.49999999999801 F 33.611111111110006 C 306.76111111111 K 
+94.99999999999801 F 34.9999999999989 C 308.1499999999989 K 
+97.49999999999801 F 36.388888888887784 C 309.53888888888775 K 
+99.99999999999801 F 37.77777777777668 C 310.92777777777667 K 
+102.49999999999801 F 39.16666666666556 C 312.3166666666655 K 
+104.9999999999979 F 40.55555555555439 C 313.7055555555544 K 
+107.4999999999979 F 41.94444444444328 C 315.09444444444324 K 
+109.99999999999778 F 43.33333333333211 C 316.4833333333321 K 
+112.49999999999778 F 44.72222222222099 C 317.87222222222096 K 
+114.99999999999767 F 46.11111111110982 C 319.2611111111098 K 
+117.49999999999767 F 47.49999999999871 C 320.64999999999867 K 
+119.99999999999756 F 48.888888888887536 C 322.0388888888875 K 
+122.49999999999756 F 50.27777777777642 C 323.4277777777764 K 
+124.99999999999744 F 51.66666666666525 C 324.81666666666524 K 
+127.49999999999744 F 53.055555555554136 C 326.2055555555541 K 
+129.99999999999733 F 54.444444444442965 C 327.59444444444296 K 
+132.49999999999733 F 55.83333333333185 C 328.9833333333318 K 
+134.99999999999721 F 57.22222222222068 C 330.37222222222067 K 
+137.49999999999721 F 58.611111111109565 C 331.7611111111095 K 
+139.9999999999971 F 59.999999999998394 C 333.1499999999984 K 
+142.4999999999971 F 61.38888888888728 C 334.53888888888724 K 
+144.999999999997 F 62.77777777777611 C 335.9277777777761 K 
+147.499999999997 F 64.166666666665 C 337.31666666666496 K 
+149.99999999999687 F 65.55555555555382 C 338.7055555555538 K 
+152.49999999999687 F 66.94444444444271 C 340.0944444444427 K 
+154.99999999999676 F 68.33333333333154 C 341.48333333333153 K 
+157.49999999999676 F 69.72222222222042 C 342.8722222222204 K 
+159.99999999999665 F 71.11111111110925 C 344.26111111110924 K 
+162.49999999999665 F 72.49999999999814 C 345.6499999999981 K 
+164.99999999999653 F 73.88888888888697 C 347.03888888888696 K 
+167.49999999999653 F 75.27777777777585 C 348.4277777777758 K 
+169.99999999999642 F 76.66666666666468 C 349.8166666666647 K 
+172.49999999999642 F 78.05555555555357 C 351.20555555555353 K 
+174.9999999999963 F 79.4444444444424 C 352.5944444444424 K 
+177.4999999999963 F 80.83333333333128 C 353.98333333333125 K 
+179.9999999999962 F 82.22222222222011 C 355.3722222222201 K 
+182.4999999999962 F 83.611111111109 C 356.76111111110896 K 
+184.99999999999608 F 84.99999999999783 C 358.1499999999978 K 
+187.49999999999608 F 86.38888888888671 C 359.5388888888867 K 
+189.99999999999596 F 87.77777777777554 C 360.92777777777553 K 
+192.49999999999596 F 89.16666666666443 C 362.3166666666644 K 
+194.99999999999585 F 90.55555555555325 C 363.70555555555325 K 
+197.49999999999585 F 91.94444444444214 C 365.0944444444421 K 
+199.99999999999574 F 93.33333333333097 C 366.48333333333096 K 
+202.49999999999574 F 94.72222222221986 C 367.8722222222198 K 
+204.99999999999562 F 96.11111111110868 C 369.2611111111087 K 
+207.49999999999562 F 97.49999999999757 C 370.64999999999753 K 
+209.9999999999955 F 98.8888888888864 C 372.0388888888864 K 
+mjd85@hollerith:~/Documents/214/code/08/ruby/project$ exit
+exit
+
+Script done on Thu 14 Apr 2016 09:31:16 AM EDT
+Script started on Tue 12 Apr 2016 09:53:00 PM EDT
+mjd85@torvalds:~/Documents/214/code/08/java$ cat Temperature.java
+/* temperature.java implements class temperature.
+ *
+ * Completed by: Mark Davis
+ * Date: April 12, 2016
+ */
+
+import java.util.Scanner;
+class Temperature
+{
+
+    private double myDegree;
+    private char myScale; 
+
+    /**************************************************
+     * Temperature constructs a temperature from and int and string*
+     * Receive: degrees and scale. *
+     * Return: the double (myDegree, myScale).        *
+     ***************************************************/  
+    public Temperature(char scale, double degrees)
+	{
+	if ( isValid(scale, degrees)) {
+		myDegree = degrees;
+		myScale = scale;	
+		}
+	}
+
+    /**************************************************
+     * isValid returns if a temperature is valid or not
+     * Receive: degrees and scale.                    *
+     * Return: true or false                          *
+     ***************************************************/
+    private boolean isValid(char scale, double degrees) {
+	boolean result = true;
+	if(scale == 'K' || scale == 'k' && degrees < 0){
+		result = false;
+	}
+	else if(scale == 'C' || scale == 'c' && degrees < -237) {
+		result = false;
+	}
+	else if(scale == 'F' || scale == 'f' && degrees < -459) {
+		result = false;
+	}
+	else {
+		result = true;
+ 	}
+	return result;
+	}
+
+    /***************************************************
+     * getDegrees() extracts the degrees of the temperature*
+     * Return: myDegree                                *
+     ***************************************************/
+    public double getDegree() 
+	{
+	return myDegree;
+	}
+
+    /***************************************************
+     * getScale() extracts the scale of the temperature*
+     * Return: myScale.                                *
+     ***************************************************/
+    public char getScale()
+	{
+	return myScale;
+	}
+
+    /***************************************************
+     * getFahrenheit() returns temperature in fahrenheit*
+     * Return: myDegree.                                *
+     ***************************************************/
+    public void getFahrenheit()
+	{
+	if(myScale == 'C' || myScale == 'c') {
+		myDegree = myDegree * (9f/5) + 32.0;
+		myScale = 'F'; }
+	if(myScale == 'K' || myScale == 'k') {
+		myDegree = myDegree * (9f/5) - 459.67;
+		myScale = 'F'; }
+	}
+
+    /***************************************************
+     * getCelsius() returns temperature in Celsius     *
+     * Return: myDegree.                               *
+     ***************************************************/
+    public void getCelsius()
+	{
+	if(myScale == 'F' || myScale == 'f') {
+		myDegree = (myDegree - 32.0) * (5f/9);
+		myScale = 'C'; }
+	if(myScale == 'K' || myScale == 'k') {
+		myDegree = myDegree - 273.15;
+		myScale = 'C'; }
+	}
+
+    /***************************************************
+     * getKelvin() returns temperature in Kelvin       *
+     * Return: myDegree.                               *
+     ***************************************************/
+    public void getKelvin()
+	{
+	if(myScale == 'F' || myScale == 'f') {
+		myDegree = (myDegree + 459.67) * (5f/9);
+		myScale = 'K'; }
+	if(myScale == 'C' || myScale == 'c') {
+		myDegree = myDegree + 273.15;
+		myScale = 'K'; }
+	}
+
+    /***************************************************
+     * raise() raises a temperature                    *
+     * POST: new temperature is set                    *
+     ***************************************************/
+    void raise(double addition) {
+	myDegree = myDegree + addition;
+	}
+
+    /***************************************************
+     * lower() lowers a temperature                    *
+     * POST: new temperature is set                    *
+     ***************************************************/
+    void lower(double myDegrees, double subtraction) {
+		myDegree = myDegree - subtraction;
+	}
+
+	
+    /***************************************************
+     * equals() compares two temperatures              *
+     * Return: true if equal, false if not equal       *
+     ***************************************************/
+    public boolean equals(Temperature deg2) {
+	boolean result = false;
+	if(myScale == deg2.getScale()) {
+		if (myDegree == deg2.getDegree()) {
+			result = true;
+		}
+	}
+	else {
+		if (myScale == 'k' || myScale == 'K') {
+			deg2.myScale = 'K';}
+		else if (myScale == 'C' || myScale == 'c') {
+			deg2.myScale = 'C';}
+		else if (myScale == 'F' || myScale == 'f') {
+			deg2.myScale = 'F'; }
+		if (myDegree == deg2.getDegree()) {
+			result = true; }	
+	}	
+	return result;
+	}
+
+   /***************************************************
+     * lessThan() determines if a temp is less than another temp*
+     * Return: true if less, false if not less         *
+     ***************************************************/
+    public boolean lessThan(Temperature deg2) {
+	boolean result = false;
+	if(myScale == deg2.getScale()) {
+		if (myDegree < deg2.getDegree()) {
+			result = true;
+		}
+	}
+	else {
+		if (myScale == 'k' || myScale == 'K') {
+			deg2.getKelvin(); }
+		else if (myScale == 'C' || myScale == 'c') {
+			deg2.getCelsius(); }
+		else if (myScale == 'F' || myScale == 'f') {
+			deg2.getFahrenheit(); }
+		if (myDegree < deg2.getDegree()) {
+			result = true; }	
+	}	
+	return result;
+    }
+	
+    /***************************************************
+     * readTemp() gets user input for a Temperature    *
+     * POST: new temperature set from user             *
+     ***************************************************/
+    void readTemp() {
+	Scanner keyboard = new Scanner(System.in);
+	//get temperature
+	System.out.println("Enter degrees: ");
+	double degree = keyboard.nextDouble();
+	myDegree = degree;
+	
+	//get scale
+	System.out.println("Enter scale: ");
+	char scale = keyboard.next().charAt(0);
+	myScale = scale;
+	}
+
+
+    /***************************************************
+     * printTemp() returns Temperature type            *
+     * Return: myDegree and myScale                    *
+     ***************************************************/
+    public String printTemp() {
+	return String.valueOf(myDegree + " " + String.valueOf(myScale));
+	}
+}
+mjd85@torvalds:~/Documents/214/code/08/java$ cat TestRunner.java
+/* TestRunner.java tests Temperature.java and outputs a chart
+ * Created by: Mark Davis
+ * Date: April 12, 2016
+ ************************************************************/
+
+import java.util.Scanner;
+
+public class TestRunner {
+
+public static void main(String[] args) {
+	Scanner keyboard = new Scanner(System.in);	
+
+	//get base temperature
+	System.out.println("Enter values for base temperature");
+	Temperature baseTemp = new Temperature('F', 30);
+	baseTemp.readTemp();
+	
+	//get limit temperature
+	System.out.println("Enter values for limit temperature");
+	Temperature limitTemp = new Temperature('F', 30);
+	limitTemp.readTemp();
+
+	//get step value
+	System.out.println("Enter step value: ");
+	double stepValue = keyboard.nextDouble();
+
+	while( baseTemp.lessThan(limitTemp) ) {
+		
+		System.out.print(baseTemp.printTemp() + " ");
+		baseTemp.getCelsius();
+		System.out.print(baseTemp.printTemp() + " ");
+		baseTemp.getKelvin();
+		System.out.print(baseTemp.printTemp() + "\n");
+		baseTemp.getFahrenheit();
+		baseTemp.raise(stepValue);
+	}    
+}
+}
+
+mjd85@torvalds:~/Documents/214/code/08/java$ javac TestRunner.java
+mjd85@torvalds:~/Documents/214/code/08/java$ java TestRunner
+Enter values for base temperature
+Enter degrees: 
+0.0
+Enter scale: 
+F
+Enter values for limit temperature
+Enter degrees: 
+100.0
+Enter scale: 
+C
+Enter step value: 
+2.5
+0.0 F -17.77777862548828 C 255.3722213745117 K
+2.499986297024577 F -16.388897283136497 C 256.7611027168635 K
+4.999972647030802 F -15.000015911350461 C 258.1499840886495 K
+7.4999590500185604 F -13.611134510130238 C 259.53886548986975 K
+9.999945505988023 F -12.222253079475735 C 260.9277469205242 K
+12.49993201493902 F -10.833371619387044 C 262.31662838061294 K
+14.999918576871721 F -9.444490129864072 C 263.7055098701359 K
+17.49990519178607 F -8.05560861090685 C 265.0943913890931 K
+19.999891859681952 F -6.666727062515442 C 266.4832729374845 K
+22.499878580559425 F -5.277845484689814 C 267.87215451531017 K
+24.999865354418603 F -3.8889638774299047 C 269.2610361225701 K
+27.499852181259428 F -2.5000822407357455 C 270.6499177592642 K
+29.999839061081786 F -1.1112005746073996 C 272.0387994253926 K
+32.49982599388585 F 0.2776811209552279 C 273.4276811209552 K
+34.99981297967145 F 1.6665628459520423 C 274.81656284595203 K
+37.49980001843875 F 3.0554446003831384 C 276.2054446003831 K
+39.99978711018764 F 4.444326384248453 C 277.5943263842484 K
+42.49977425491812 F 5.833208197547986 C 278.983208197548 K
+44.99976145263031 F 7.2220900402818 C 280.37209004028176 K
+47.49974870332409 F 8.610971912449834 C 281.7609719124498 K
+49.99973600699951 F 9.999853814052116 C 283.1498538140521 K
+52.49972336365664 F 11.388735745088681 C 284.5387357450887 K
+54.99971077329536 F 12.777617705559464 C 285.92761770555944 K
+57.49969823591567 F 14.166499695464465 C 287.3164996954644 K
+59.999685751517575 F 15.555381714803685 C 288.70538171480365 K
+62.49967332010118 F 16.944263763577187 C 290.09426376357715 K
+64.99966094166638 F 18.333145841784905 C 291.4831458417849 K
+67.49964861621328 F 19.72202794942691 C 292.87202794942687 K
+69.99963634374177 F 21.11091008650313 C 294.2609100865031 K
+72.49962412425197 F 22.49979225301363 C 295.64979225301363 K
+74.99961195774387 F 23.88867444895841 C 297.0386744489584 K
+77.49959984421736 F 25.277556674337415 C 298.4275566743374 K
+79.99958778367244 F 26.666438929150633 C 299.8164389291506 K
+82.49957577610922 F 28.055321213398138 C 301.2053212133981 K
+84.99956382152772 F 29.44420352707992 C 302.5942035270799 K
+87.4995519199278 F 30.833085870195923 C 303.9830858701959 K
+89.99954007130958 F 32.22196824274621 C 305.37196824274616 K
+92.49952827567296 F 33.610850644730704 C 306.7608506447307 K
+94.99951653301804 F 34.99973307614949 C 308.14973307614946 K
+97.49950484334471 F 36.388615537002494 C 309.53861553700244 K
+99.99949320665297 F 37.77749802728971 C 310.9274980272897 K
+102.49948162294294 F 39.166380547011215 C 312.3163805470112 K
+104.99947009221461 F 40.555263096166996 C 313.70526309616696 K
+107.49945861446787 F 41.944145674756996 C 315.094145674757 K
+109.99944718970283 F 43.333028282781285 C 316.4830282827813 K
+112.4994358179195 F 44.72191092023985 C 317.8719109202398 K
+114.99942449911777 F 46.11079358713263 C 319.26079358713264 K
+117.49941323329773 F 47.4996762834597 C 320.64967628345966 K
+119.99940202045929 F 48.88855900922098 C 322.03855900922093 K
+122.49939086060255 F 50.277441764416544 C 323.4274417644165 K
+124.99937975372751 F 51.666324549046394 C 324.8163245490464 K
+127.49936869983418 F 53.05520736311052 C 326.2052073631105 K
+129.99935769892244 F 54.44409020660887 C 327.5940902066088 K
+132.4993467509924 F 55.832973079541496 C 328.98297307954147 K
+134.99933585604407 F 57.221855981908405 C 330.37185598190837 K
+137.49932501407733 F 58.61073891370953 C 331.76073891370953 K
+139.9993142250923 F 59.99962187494494 C 333.1496218749449 K
+142.49930348908896 F 61.388504865614635 C 334.53850486561464 K
+144.99929280606733 F 62.77738788571861 C 335.9273878857186 K
+147.4992821760273 F 64.1662709352568 C 337.3162709352568 K
+149.99927159896896 F 65.55515401422927 C 338.70515401422927 K
+152.49926107489233 F 66.94403712263603 C 340.094037122636 K
+154.9992506037974 F 68.33292026047707 C 341.48292026047704 K
+157.4992401856842 F 69.72180342775238 C 342.87180342775235 K
+159.99922982055256 F 71.11068662446192 C 344.26068662446187 K
+162.49921950840263 F 72.49956985060574 C 345.6495698506057 K
+164.9992092492344 F 73.88845310618383 C 347.0384531061838 K
+167.49919904304778 F 75.27733639119616 C 348.42733639119615 K
+169.99918888984297 F 76.66621970564282 C 349.81621970564277 K
+172.49917878961975 F 78.0551030495237 C 351.2051030495237 K
+174.99916874237834 F 79.44398642283893 C 352.5939864228389 K
+177.49915874811853 F 80.83286982558838 C 353.98286982558835 K
+179.99914880684042 F 82.2217532577721 C 355.37175325777207 K
+182.49913891854402 F 83.6106367193901 C 356.76063671939005 K
+184.9991290832292 F 84.99952021044233 C 358.1495202104423 K
+187.4991193008962 F 86.3884037309289 C 359.53840373092885 K
+189.9991095715448 F 87.77728728084969 C 360.92728728084967 K
+192.49909989517522 F 89.16617086020483 C 362.3161708602048 K
+194.99909027178734 F 90.55505446899424 C 363.7050544689942 K
+197.49908070138105 F 91.94393810721787 C 365.09393810721787 K
+199.99907118395657 F 93.33282177487585 C 366.48282177487584 K
+202.4990617195138 F 94.72170547196812 C 367.8717054719681 K
+204.99905230805263 F 96.1105891984946 C 369.2605891984946 K
+207.49904294957327 F 97.49947295445541 C 370.6494729544554 K
+209.9990336440756 F 98.88835673985052 C 372.0383567398505 K
+mjd85@torvalds:~/Documents/214/code/08/java$ exit
+exit
+
+Script done on Tue 12 Apr 2016 09:53:35 PM EDT

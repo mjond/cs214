@@ -1,0 +1,183 @@
+--temp_package defines operations for Temperature type
+
+--Created by: Mark Davis
+--Date: April 12, 2016
+--project08, CS214, CALVIN COLLEGE
+-------------------------------------------------------
+
+with Ada.Text_IO; use Ada.Text_IO;
+package body Temp_Package is
+
+----------------------------------------------
+  -- Init initializes a Temperature variable          
+  -- Receive: Temp, a Temperature variable
+  --          degree, the degree
+  -- 	      scale, the scale  
+  -- Return: Temp, its fields set to degree
+  -- 				and scale     
+  ----------------------------------------------
+  procedure Init(Temp: out Temperature; degree : in float; scale : in string) is
+  begin
+	if isValid(scale, degree) then
+	  Temp.myDegree := degree;
+	  Temp.myScale := scale;
+	end if;
+  end Init;
+
+  ----------------------------------------------
+  -- isValid() validates a temperature       
+  -- Receive: scale, a string
+  -- 	      degree, a float                     
+  -- PRE: scale and degree have been initialized            
+  -- Return: true or false                     
+  ----------------------------------------------
+  --function isValid(result : out boolean; degree : in float; scale : in string) return boolean is
+  --begin
+	--boolean result := true;
+	--if scale = 'k' or scale = 'K' and degrees < 0.0 then
+	--	result := false;
+	--elsif scale = 'c' or scale = 'C' and degrees < -237.0 then
+	--	result := false;
+	--elsif scale = 'f' or scale = 'F' and degrees < -459.0 then
+	--	result := false;
+	--else
+	--	result := true;
+	--end if;
+	--return result;
+  --end isValid;
+
+  ----------------------------------------------
+  -- getDegree(Temperature) retrieves Temp.myDegree       
+  -- Receive: Temp, a Temperature                      
+  -- PRE: Temp has been initialized.            
+  -- Return: Temp.myDegree                     
+  ----------------------------------------------
+  function getDegree(Temp : in Temperature) return String is
+  begin
+	return Temp.myDegree;
+  end getDegree;
+
+  ----------------------------------------------
+  -- getScale(Temperature) retrieves Temp.myDegree       
+  -- Receive: Temp, a Temperature                      
+  -- PRE: Temp has been initialized.            
+  -- Return: Temp.myScale                     
+  ----------------------------------------------
+  function getScale(Temp : in Temperature) return String is
+  begin
+	return Temp.myScale;
+  end getScale;
+
+  ----------------------------------------------
+  -- setCelsius() sets a temperature to Celsius
+  -- Receive: Temp, a temperature                      
+  -- PRE: Temp has been initialized.            
+  -- POST: temperature now in celsius                     
+  ----------------------------------------------
+  procedure setCelsius(Temp : in Temperature) is
+  begin
+	if Temp.myScale = 'k' or Temp.myScale = 'K' then
+	  Temp.myDegree := Temp.myDegree - 273.15; -- conversion equation
+	  Temp.myScale := 'C';
+	end if;
+	if Temp.myScale = 'f' or Temp.myScale = 'F' then
+	  Temp.myDegree := (Temp.myDegree - 32.0) * (5.0/9.0); --conversion equation
+	  Temp.myScale := 'C';
+	end if;
+  end setCelsius;
+
+  ----------------------------------------------
+  -- setKelvin() sets a temperature to Kelvin
+  -- Receive: temp, a Temperature                      
+  -- PRE: Temp has been initialized.            
+  -- POST: temperature now in Kelvin                     
+  ----------------------------------------------
+  procedure setKelvin(Temp : in Temperature) is
+  begin
+	if Temp.myScale = 'C' or Temp.myScale = 'c' then
+	  Temp.myDegree := Temp.myDegree + 273.15; -- conversion equation
+	  Temp.myScale := 'K';
+	end if;
+	if Temp.myScale = 'f' or Temp.myScale = 'F' then
+	  Temp.myDegree := (Temp.myDegree + 459.67) * (5.0/9.0); -- conversion equation
+	  Temp.myScale := 'K';
+	end if;
+  end setKelvin;
+
+  ----------------------------------------------
+  -- setFahrenheit() sets a temperature to Fahrenheit
+  -- Receive: Temp, a Temperature                      
+  -- PRE: Temp has been initialized.            
+  -- POST: temperature now in Fahrenheit                     
+  ----------------------------------------------
+  procedure setFahrenheit(Temp : in Temperature) is
+  begin
+	if Temp.myScale = 'c' or Temp.myScale = 'C' then
+	  Temp.myDegree := Temp.myDegree * (9.0/5.0) + 32.0; -- conversion equation
+	  Temp.myScale := 'F';
+	end if;
+	if Temp.myScale = 'k' or Temp.myScale = 'K' then
+	  Temp.myDegree := (Temp.myDegree * (9.0/5.0)) - 469.67; --conversion equation
+	  Temp.myScale := 'F';
+	end if;
+  end setFahrenheit;
+
+  ----------------------------------------------
+  -- raiseTemp() adds a new degree to a Temperature
+  -- Receive: Temp, a Temperature
+  -- 	      addition, a float                      
+  -- PRE: Temp has been initialized.            
+  -- POST: myDegree has new value                     
+  ----------------------------------------------
+  procedure raiseTemp(Temp : in Temperature; addition : in float) is
+  begin
+	Temp.myDegree := Temp.myDegree + addition; -- add new degree
+  end raiseTemp;
+
+
+  ----------------------------------------------
+  -- lowerTemp() subtracts a new degree to a Temperature
+  -- Receive: Temp, a Temperature
+  -- 	      subtraction, a float                      
+  -- PRE: Temp has been initialized.            
+  -- POST: myDegree has new value                     
+  ----------------------------------------------
+  procedure lowerTemp(Temp : in Temperature; subtraction : in float) is
+  begin
+	Temp.myDegree := Temp.myDegree - subtraction; -- subtract new degree
+  end lowerTemp;
+
+  ----------------------------------------------
+  -- equals() compares two temperatures
+  -- Receive: Temp, a Temperature
+  -- 	      Temp_2, a Temperature                     
+  -- PRE: Temp has been initialized. 
+  --  	  Temp_2 has been initialized           
+  -- Return: true or false                    
+  ----------------------------------------------
+  function equals(Temp : in Temperature; Temp_2 : in Temperature) return boolean is
+  begin
+ 	if Temp.myScale = Temp_2.myScale then
+		if Temp.myDegree = Temp_2.myDegree then
+			return true;
+		end if;
+	else
+		if Temp.myScale = 'K' or Temp.myScale = 'k' then
+			Temp.setKelvin;
+		elsif Temp.myScale = 'c' or Temp.myScale = 'C' then
+			Temp.setCelsius;
+		elsif Temp.myScale = 'f' or Temp.myScale = 'F' then
+			Temp.setFahrenheit;
+		end if;
+		if Temp.myDegree = Temp_2.myDegree then
+			return true;
+		end if;
+	end if;
+	return false;
+  end equals;
+
+end Temp_Package;
+
+  
+
+

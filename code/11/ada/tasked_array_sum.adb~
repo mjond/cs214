@@ -1,0 +1,44 @@
+-- array_sum.adb sums the values from an input file using an array.
+--
+-- Begun by: Prof. Adams, for CS 214 at Calvin College.
+-- Completed by: Mark Davis
+-- Date: May 2, 2016
+--
+-- Usage: tasked_array_sum <inFileName>
+-------------------------------------------------------------------
+
+with Ada.Text_IO,            -- string output
+     Ada.Integer_Text_IO,    -- integer output
+     Ada.Command_Line,       -- Argument()
+     Ada.Real_Time;          -- Clock, Time, etc.
+
+use  Ada.Text_IO, Ada.Integer_Text_IO, Ada.Real_Time;
+
+procedure tasked_array_sum is
+
+   package Long_IO is new Integer_IO(Long_Integer); use Long_IO;
+
+   type Int_Array is array (Integer range <>) of Long_Integer;
+   type Int_Array_Pointer is access Int_Array;
+
+   Values: Int_Array_Pointer;
+   Total:  Long_Integer;
+   Start_Time, Stop_Time:  Ada.Real_Time.Time;
+   Time_Required: Duration;
+   begin
+      task type Array_Adder_Task is 
+      entry sum(ID, Slice_Size: in Integer);
+      entry report(Result: out Long_Integer);
+   end;
+
+
+
+function Sum_Slice(V: in Int_Array_Pointer;
+                        Start, Stop: in Integer) 
+                        return Long_Integer is
+      Partial_Sum: Long_Integer := 0;
+   begin
+         for i in  Start..Stop loop
+            Partial_Sum := Partial_Sum + V(i);
+         end loop;
+end Sum_Slice;

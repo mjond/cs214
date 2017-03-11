@@ -1,0 +1,12 @@
+/* FlyingBird.java provides class FlyingBird.
+ *
+ * Completed by: Mark Davis
+ * Date: april 26, 2016
+ */
+
+public class FlyingBird extends Bird {
+
+    public String movement() {
+	return "flew";
+    }
+}

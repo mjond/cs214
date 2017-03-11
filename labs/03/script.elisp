@@ -1,0 +1,52 @@
+;; This buffer is for notes you don't want to save, and for Lisp evaluation.
+;; If you want to create a file, visit that file with C-x C-f,
+;; then enter the text in that file's own buffer.
+
+;;; year_codes.el is a driver for function yearCode.
+;;; Begun by: Dr. Adams, for CS 214 at Calvin College.
+;;; completed by: MArk Davis
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; yearCode returns the code for a given academic year.                 ;;;
+;;; Receive: year, a string.                                             ;;;
+;;; Precondition: year is one of {freshman, sophomore, junior or senior}.;;;
+;;; Return: the integer code corresponding to year.                      ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; Replace this line with the definition of function yearCode().
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; main function                        ;;;
+;;; input: year                          ;;;
+;;; output: code corresponding to year   ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun yearCode(year) ;declare function
+  (if (equal year "freshman");if year if freshman
+      1 ;return 1
+  (if (equal year "sophomore") ; if year is sophomore
+      2 ;return 2
+  (if (equal year "junior"); if year is junior
+      3 ;return 3
+  (if (equal year "senior"); if year senior
+      4 ;return 4
+0))))) ;else return 0
+yearCode
+
+
+(defun main (year);declare main function
+ (interactive "sEnter your academic year: ")  ; read year
+ (message "%d" (yearCode year)))  ; display its code
+main
+    
+;;; Tests...
+(main "junior")
+"3"
+
+(yearCode "junior")
+3
+
+(main "freshman")
+"1"
+
+(main "sophomore")
+"2"
+

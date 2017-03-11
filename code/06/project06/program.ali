@@ -1,0 +1,71 @@
+V "GNAT Lib v4.6"
+M P W=b
+P SS ZX
+R nnnnnnnnnnnnnnnnnnnnnnnnnvnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+
+U program%b		program.adb		814cd459 NE OO SU IL
+W ada%s			ada.ads			ada.ali
+W ada.float_text_io%s	a-flteio.ads		a-flteio.ali
+W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20090727140100 0c711ac9
+D a-finali.ads		20090409150019 e5e85fa4
+D a-filico.ads		20090409150019 872dc219
+D a-flteio.ads		20070406091342 e18a47a0
+D a-inteio.ads		20070406091342 f64b89a4
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-stream.ads		20090409150019 2ca4ee37
+D a-tags.ads		20101021101406 c7695348
+D a-textio.ads		20091028140912 386df5d4
+D a-tiflio.ads		20090409150019 56fbda09
+D a-tiinio.ads		20090409150019 aa04e5d6
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20090409150019 f77d8799
+D i-cstrea.ads		20100622165701 1bd72c32
+D program.adb		20160331013226 aee0ef89
+D system.ads		20140416172229 23e1f70b
+D s-crtl.ads		20100617122610 ac77b159
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20100909103250 443b9d66
+D s-finimp.ads		20090409150019 46853fe8
+D s-finroo.ads		20090409150019 dbb860c9
+D s-parame.ads		20091130110856 9c5d83fa
+D s-secsta.ads		20090707124243 eea35a36
+D s-soflin.ads		20090729085153 9414c974
+D s-stache.ads		20090417130712 596fc1b4
+D s-stalib.ads		20101021102512 c4241c00
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stratt.ads		20100909123135 aedef97e
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-wchcon.ads		20090417130712 bfeb2e3d
+X 1 ada.ads
+16K9*Ada 19e8 16|9r6 9r23 10r6 10r29 11r6 12r5
+X 5 a-flteio.ads
+20K13*Float_Text_IO[11|45] 16|10w10 10r33
+X 6 a-inteio.ads
+18K13*Integer_Text_IO[12|45] 16|11w10 12r9
+X 10 a-textio.ads
+49K13*Text_IO 472e16 16|9w10 9r27
+243U14*Put 16|54s1
+264U14*Put_Line 16|45s9
+X 12 a-tiinio.ads
+55U14*Get 16|33s17[6|18] 55s1[6|18]
+65U14*Put 16|48s17[6|18]
+X 16 program.adb
+14U11*program 14b11 62l5 62t12
+16A6 Vector(integer)<integer> 28r31 43r27 57r18
+18i1 size{integer} 55m5 57r30 59r27
+20i1 value{integer} 33m21 34r27
+28U11 readArray 28b11 28<21 28>39 36l5 36t14 59s9
+28a21 Arr{16A6} 31r18 34m17
+28i39 size{integer}
+31i13 I{integer} 34r21
+43U11 printArray 43b11 43>22 50l5 50t15 60s9
+43a22 Arr{16A6} 46r32 46r45 48r22
+46i13 i{integer} 48r26
+57a9 array1{16A6} 59m19 60r20
+

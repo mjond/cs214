@@ -1,0 +1,110 @@
+Exercise 1: Line 738 and the following is the code that echos the commands back to the user. For example, when stop is entered by the user, "Stop command recieved" will show up 		    on the prompt. The same happens with "Start". For anything else that the user inputs, the program echoes it back to the user. 
+
+
+Example 2:
+
+
+mjd85@boole:~/Documents/214/labs/02$ ./example2
+042
+NUMBER
+
+987
+NUMBER
+
+555
+NUMBER
+
+R2D2
+WORD
+
+hello 
+WORD
+
+computer
+WORD
+
+Input with UNDERSCORE: 
+
+file_name
+WORD
+_WORD
+
+word_doc
+WORD
+_WORD
+
+	When an input has an underscore in it, the program outputs WORD and then _WORD. Since underscore isn't in the library, the program echoes the underscore back after it 		identified whether the input was a WORD or NUMBER. 
+
+UPDATED LIBRARY:
+
+echo
+WORD
+
+245
+NUMBER
+
+word_doc
+WORD
+
+123_123
+NUMBER
+
+_34_
+NUMBER
+
+___3
+NUMBER
+
+
+Example 3: 
+
+
+KEYWORD: class
+IDENTIFIER: StudentInfo
+PUNCTUATION: {
+KEYWORD: public
+PUNCTUATION: :
+IDENTIFIER: StudentInfo
+PUNCTUATION: (
+PUNCTUATION: )
+PUNCTUATION: {
+IDENTIFIER: myGPA
+OPERATOR: =
+DOUBLE: 0.0 (0)
+PUNCTUATION: ;
+IDENTIFIER: myHours
+OPERATOR: =
+INTEGER: 0 (0)
+PUNCTUATION: ;
+PUNCTUATION: }
+IDENTIFIER: StudentInfo
+PUNCTUATION: (
+KEYWORD: double
+IDENTIFIER: gpa
+PUNCTUATION: ,
+KEYWORD: int
+IDENTIFIER: hours
+PUNCTUATION: )
+PUNCTUATION: {
+IDENTIFIER: myGPA
+OPERATOR: =
+IDENTIFIER: gpa
+PUNCTUATION: ;
+IDENTIFIER: myHours
+OPERATOR: =
+IDENTIFIER: hours
+PUNCTUATION: ;
+PUNCTUATION: }
+KEYWORD: private
+PUNCTUATION: :
+KEYWORD: double
+IDENTIFIER: myGPA
+PUNCTUATION: ;
+KEYWORD: int
+IDENTIFIER: myHours
+PUNCTUATION: ;
+PUNCTUATION: }
+PUNCTUATION: ;
+
+
+

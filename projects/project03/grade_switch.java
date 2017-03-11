@@ -1,0 +1,44 @@
+/*grade_switch.java computes corresponding letter grade 
+
+Input: number grade/percentage
+Precondition: input is a positive number between 1-10
+Output: corresponding letter grade to percentage
+
+Created by: Mark Davis, CS 214, Calvin College
+Date: February 25, 2016
+Model Code: CS 214 lab03
+*********************************/
+
+import java.util.Scanner; //include class for Scanner
+
+public class grade_switch{
+	public static void main(String[] args) {
+		Scanner keyboard = new Scanner(System.in);
+		System.out.println("\nEnter your average: "); //prompt for average
+		
+		int average = keyboard.nextInt(); //read average
+		System.out.println(letterGrade(average)); //display its code
+	}
+
+    /***************************************************************
+    * gradeCode() converts a number grade to letter grade. *
+    * Receive: grade, an integer.
+    * PRE: grade is integer (1-10).
+    * Return: the corresponding letter grade (string).
+    */
+	public static char letterGrade(int average) {
+		switch (average / 10)
+		{
+			case 10: case 9:
+			  return 'A';
+			case 8:
+			  return 'B';
+			case 7:
+			  return 'C';
+			case 6:
+			  return 'D';
+			default:
+			  return 'F';
+		}
+	}
+}

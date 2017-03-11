@@ -1,0 +1,309 @@
+Script started on Mon 07 Mar 2016 07:34:42 PM EST
+mjd85@aiken:~/Documents/214/projects/project05$ cat quad.java
+/* quad.java the roots of the quadratic equation
+ *
+ * Input: a b c (double)
+ * PRE: input is positive
+ * Output: roots of given inputs
+ * Completed by: Mark Davis March 7, 2016
+ * Model Code: lab05 CS 214
+ ********************************************************/
+import java.util.Scanner; 
+import java.math.*;
+
+class quad {
+
+	/***************************************************************
+          quad() computes roots
+    	* Receive: a b c (doubles)
+   	* PRE: numbers are positive
+    	* Return: root 1 and root 2
+   	*/
+	public static boolean quad(double a, double b, double c, double[] results) { //declare function
+	  if (a != 0) {
+		double answer = Math.pow(b, 2.0) - 4 * a * c; //compute answer
+		if (answer >= 0) { //if bigger than 0
+			results[0] = (-b + Math.sqrt(answer))/(2*a); //compute first root
+			results[1] = (-b - Math.sqrt(answer))/(2*a); //compute second root
+			return true;
+		} else {
+			System.err.println("\n*** quad(): b^2 - 4ac is negative!"); //else output error message
+			results[0] = results[1] = 0; //set roots to 0
+			return false;
+		}
+	  }
+	  else {
+		System.err.println("\n*** quad(): a is zero!"); //else output error message
+		results[0] = results[1] = 0; //set roots to 0
+		return false;	
+	  }
+	}
+
+	public static void main(String[] args) {
+		Scanner keyboard = new Scanner(System.in); //scan keyboard for input
+		System.out.println("\nEnter a b and c: "); //prompt for input
+		double a, b, c; //declare variables for a, b and c
+		a = keyboard.nextDouble(); //store keyboard inputs
+		b = keyboard.nextDouble();
+		c = keyboard.nextDouble();
+		double [] results = new double[2]; //make array for storing results
+		quad(a, b, c, results); //call quad to compute roots
+		System.out.println("\n Roots are: " + results[0] + results[1]); //display roots		
+		
+	}
+}
+mjd85@aiken:~/Documents/214/projects/project05$ jaa vac quad.java
+mjd85@aiken:~/Documents/214/projects/project05$ java quad
+
+Enter a b and c: 
+1 2 3
+
+*** quad(): b^2 - 4ac is negative!
+
+ Roots are: 0.00.0
+mjd85@aiken:~/Documents/214/projects/project05$ java quad
+
+Enter a b and c: 
+3 4 5
+
+*** quad(): b^2 - 4ac is negative!
+
+ Roots are: 0.00.0
+mjd85@aiken:~/Documents/214/projects/project05$ java quad
+
+Enter a b and c: 
+1 4 1
+
+ Roots are: -0.2679491924311228-3.732050807568877
+mjd85@aiken:~/Documents/214/projects/project05$ exit
+exit
+
+Script done on Mon 07 Mar 2016 07:35:20 PM EST
+Script started on Tue 08 Mar 2016 08:06:16 PM EST
+mjd85@hopper:~/Documents/214/projects/project05$ cat quad.el
+;quad.el computes roots of a quadratic equation
+;
+;Input: a, b and c
+;Pre: a is positive
+;Output: roots of given inputs
+;lab05 CS 214 Calvin College
+;Created by: Mark Davis
+;Date: March 8, 2016
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;quad() computes roots of quadratic equation
+;receive: a, b, c
+;pre: a is positive
+;return; roots of quadratic equation
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun quad(a b c)
+  (if (equal a 0) ((message "*** quad() : a is negative!") break) ; if a is 0
+      (setq answer (- (* b b) (* 4 a c))) ;else compute part of equation
+       (if (>= answer 0) (progn ; if arg is bigger than 0
+	   (setq root1 (/ (+ (- b) (sqrt answer)) (* 2 a))); computes 0
+	   (setq root2 (/ (- (- b) (sqrt answer)) (* 2 a)))
+	   (list root1 root2)); put results in list
+	 (message " *** quad() : b^2 -4ac is negative! ")break)) ;error message
+)
+
+quad
+
+
+
+(defun main(a b c)
+  (interactive "nEnter a: ") ;prompt for input
+  (interactive "nEnter b: ")
+  (interactive "nEnter c: ")
+  (setq result (quad a b c)) ;call quadratic function
+  (setq part1 (elt result 0))
+  (setq part2 (elt result 1))
+  (message "Root 1 is %s and root 2 is %s" part1 part2); output message with results
+)
+
+main
+
+
+;;;;;tests;;;;;
+
+(main 1 -3 -4)
+"Root 1 is 4.0 and root 2 is -1.0"
+
+(main 1 3 1)
+"Root 1 is -0.3819660112501051 and root 2 is -2.618033988749895"
+
+(main 1 5 6)
+"Root 1 is -2.0 and root 2 is -3.0"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mjd85@hopper:~/Documents/214/projects/project05$ exit
+exit
+
+Script done on Tue 08 Mar 2016 08:06:30 PM EST
+Script started on Mon 07 Mar 2016 09:00:16 PM EST
+mjd85@aiken:~/Documents/214/projects/project05$ sc  cat quad.rb
+# quad.rb computes quadratic roots
+#
+# Input: a, b and c for quadratic equation
+# Precondition: a, b and c are positive
+# Output: roots of given input
+#
+# Created by: Mark Davis
+# Date: March 7, 2016
+#################################################################
+
+
+# quad() computes quadratic roots
+# Receive: a, b, c (floats)             
+# PRE: a is positive
+# Return: roots of given inputs
+######################################################
+
+def quad(a, b, c)
+  results = Array.new #make array for storing results
+  if a != 0 #if a is not 0
+    answer = (b * b) - 4 * a * c #compute first part of quadratic equation
+	if answer >= 0
+	  results[0] = (-b + Math.sqrt(answer))/(2*a) #compute root 1
+	  results[1] = (-b - Math.sqrt(answer))/(2*a) #compute root 2
+  	else
+	  print "*** quad() : b^2 - 4ac is negative!"; #output error message if negative
+	  results[0] = 0 			#set values to 0
+	  results[1] = 0
+   	end
+  else
+    print "*** quad() : a is negative!"; 	#output error message if negative
+    results[0] = 0 				#set values to 0
+    results[1] = 0
+  end  
+  return results 				#return the array
+end
+
+
+def main
+  print "Enter a: "; #prompt for a, b and c
+  a = gets.to_f
+  print "Enter b: ";
+  b = gets.to_f
+  print "Enter c: ";
+  c = gets.to_f
+
+  answer = quad(a, b, c)
+  puts "Root 1 is: " << answer[0].to_s #output values
+  puts "Root 2 is: " << answer[1].to_s
+end
+
+main
+mjd85@aiken:~/Documents/214/projects/project05$ cat quad.rb[7Pexit./quadgnatmake quad.adb[5Pcat quad.adb            ruby quad.rb
+Enter a: 1
+Enter b: 5
+Enter c: 6
+Root 1 is: -2.0
+Root 2 is: -3.0
+mjd85@aiken:~/Documents/214/projects/project05$ ruby quad.rb
+Enter a: 1 4    
+Enter b: 4
+Enter c: 1
+Root 1 is: -0.2679491924311228
+Root 2 is: -3.732050807568877
+mjd85@aiken:~/Documents/214/projects/project05$ ruby quad.rb
+Enter a: 3
+Enter b: 2
+Enter c: 1
+*** quad() : b^2 - 4ac is negative!Root 1 is: 0
+Root 2 is: 0
+mjd85@aiken:~/Documents/214/projects/project05$ exit
+exit
+
+Script done on Mon 07 Mar 2016 09:01:08 PM EST
+Script started on Mon 07 Mar 2016 08:22:40 PM EST
+mjd85@aiken:~/Documents/214/projects/project05$ cat quad.adb
+-- quad.adb computes roots given inputs a b and c
+--
+-- Input: a, b, c (floats)
+-- Precondition: inputs are positive
+-- Output: roots for the given inputs
+--
+-- Completed by: Mark Davis
+-- Date: March 7, 2016
+--------------------------------------------------------------
+
+with Ada.Text_IO, Ada.Float_Text_IO, Ada.Strings.Fixed, Ada.Numerics.Generic_Elementary_Functions;
+use  Ada.Text_IO, Ada.Float_Text_IO, Ada.Strings.Fixed;
+
+
+
+procedure quad is
+	package Value_Functions is new Ada.Numerics.Generic_Elementary_Functions (Float);
+	use Value_Functions;
+
+	a, b, c, part1, part2, answer : Float; --declare variables
+
+ procedure quadratic(a, b, c : in Float; part1, part2 : out Float) is --declare function
+	begin
+	if answer /= 0.0 then -- if a is 0
+		answer := (b ** 2.0) - 4.0 * a * c; --compute root	
+		if answer >= 0.0 then -- if greater than 0, keep going
+			part1 := (-b + Sqrt(answer))/(2.0*a); --compute root 1
+			part2 := (-b - Sqrt(answer))/(2.0*a); --compute root 2
+		else
+			Put_Line("*** quadratic(): b^2 - 4ac is negative!"); --error message
+			part1 := 0.0; part2 := 0.0; --set root 1 and 2 to zero
+		end if;
+	else 
+		Put_Line("*** quadratic(): a is a zero!"); --error message
+		part1 := 0.0; part2 := 0.0; --set root 1 and 2 to zero
+	end if;
+ end quadratic;
+
+begin
+  Put("Enter a, b and c: "); --prompt for input
+  Get(a); Get(b); Get(c); --store values
+  
+  quadratic(a, b, c, part1, part2); -- call quadratic function
+
+  Put("Root 1 is: "); --output root 1
+  Put(part1);
+  Put("Root 2 is: "); --output root 2
+  Put(part2);
+
+end quad;
+mjd85@aiken:~/Documents/214/projects/project05$ gnatmake quad.adb
+gcc-4.6 -c quad.adb
+gnatbind -x quad.ali
+gnatlink quad.ali
+mjd85@aiken:~/Documents/214/projects/project05$ ./quad
+Enter a, b and c: 1 2 3
+*** quadratic(): b^2 - 4ac is negative!
+Root 1 is:  0.00000E+00Root 2 is:  0.00000E+00
+mjd85@aiken:~/Documents/214/projects/project05$ ./quad
+Enter a, b and c: 1 4 1
+Root 1 is: -2.67949E-01Root 2 is: -3.73205E+00
+mjd85@aiken:~/Documents/214/projects/project05$ ./quad
+Enter a, b and c: 1 5 6
+Root 1 is: -2.00000E+00Root 2 is: -3.00000E+00
+mjd85@aiken:~/Documents/214/projects/project05$ exit
+exit
+
+Script done on Mon 07 Mar 2016 08:23:13 PM EST

@@ -1,0 +1,31 @@
+/* temperature.java implements class temperature.
+ *
+ * Completed by: Mark Davis
+ * Date: April 12, 2016
+ */
+
+import java.util.Scanner;
+class Temperature
+{
+
+    private int degrees;
+    private char scale; 
+
+    /**************************************************
+     * Temperature constructs a temperature from and int and string*
+     * Receive: degrees and scale. *
+     * Return: the double (myDegree, myScale).        *
+     ***************************************************/
+    
+    public Temperature(char scale, int degrees)
+	{
+	if (scale == "F" || scale == "C" || scale == "K" || scale == "f" || scale == "c" || scale == "k") {
+		if (degrees < 1000 & degrees > -1000 {
+			myDegree = degrees;
+			myScale = scale;
+		}
+	}
+	}
+
+
+}
